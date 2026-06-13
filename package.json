@@ -1,0 +1,55 @@
+{
+	"name": "astro-starter-project",
+	"type": "module",
+	"version": "0.13.4",
+	"author": "Mehdi Abbane",
+	"description": "Astro starter template with tailwind, alpinejs, localization, blog, CMS, and comments",
+	"license": "MIT",
+	"files": ["*"],
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "npm run pwa:generate-assets && astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"pwa:generate-assets": "pwa-assets-generator --preset minimal public/logo.svg"
+	},
+	"dependencies": {
+		"@astrojs/alpinejs": "^0.4.9",
+		"@astrojs/mdx": "^3.1.9",
+		"@astrojs/rss": "^4.0.18",
+		"@astrojs/sitemap": "^3.7.3",
+		"@astrojs/tailwind": "^5.1.5",
+		"@fontsource-variable/inter": "^5.2.8",
+		"@tailwindcss/vite": "^4.3.1",
+		"@types/alpinejs": "^3.13.11",
+		"astro": "^4.16.19",
+		"astro-i18n-aut": "^0.7.3",
+		"gsap": "^3.15.0",
+		"install": "^0.13.0",
+		"tailwindcss": "^4.3.1",
+		"workbox-window": "^7.4.1"
+	},
+	"devDependencies": {
+		"@vite-pwa/assets-generator": "^0.2.6",
+		"astro-icon": "^1.1.5",
+		"astro-seo": "^0.8.4",
+		"prettier": "^3.8.4",
+		"sharp": "0.33.4",
+		"prettier-plugin-astro": "^0.14.1",
+		"prettier-plugin-tailwindcss": "^0.6.14"
+	},
+	"prettier": {
+		"tabWidth": 4,
+		"useTabs": true,
+		"bracketSameLine": true,
+		"printWidth": 150,
+		"htmlWhitespaceSensitivity": "ignore",
+		"plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"]
+	},
+	"overrides": {
+		"sharp": "0.33.4",
+		"string-width": "4.1.0",
+		"strip-ansi": "5.2.0"
+	}
+}

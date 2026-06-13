@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import edward from '@src/assets/images/pexels-a-darmel.webp'
+import jimmy from '@src/assets/images/pexels-ketut-subiyanto.webp'
+import johns from '@src/assets/images/pexels-maide-arslan.webp'
+import james from '@src/assets/images/pexels-uiliamnornberg.webp'
+---
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Next-Gen AI Summit Keynote Speakers Lineup",
+    "description": "Meet our distinguished line-up of artificial intelligence scientists, researchers, and global policy advisors.",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Person",
+          "name": "Dr. Edward Kane",
+          "jobTitle": "Chief AI Scientist",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "OpenAI"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Person",
+          "name": "Dr. James Holloway",
+          "jobTitle": "CTO",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Google DeepMind"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Person",
+          "name": "Dr. Johns Ellery",
+          "jobTitle": "AI Policy Advisor",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "EU Commission"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Person",
+          "name": "Dr. Jimmy Caldwell",
+          "jobTitle": "AI Researcher",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Stanford AI Lab"
+          }
+        }
+      }
+    ]
+  }
+</script>
+
+<section aria-label="Featured Keynote Speakers" class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-10 w-full bg-black text-white">
+  
+  <article class="speaker-card flex gap-3 sm:gap-4 opacity-0 will-change-transform">
+    <div class="w-1/2 flex flex-col justify-between bg-secondary text-accent p-5 rounded-card min-h-[180px] sm:min-h-[220px]">
+      <h3 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">Dr. Edward Kane</h3>
+      <p class="font-semibold text-lg sm:text-xl text-zinc-400">Chief AI Scientist, <span class="text-white">OpenAI</span></p>
+    </div>
+    <div class="w-1/2 overflow-hidden rounded-card">
+      <Image 
+        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-100 hover:scale-105" 
+        src={edward} 
+        alt="Dr. Edward Kane, Chief AI Scientist at OpenAI presenting at Next-Gen AI Summit"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </article>
+
+  <article class="speaker-card flex gap-3 sm:gap-4 opacity-0 will-change-transform">
+    <div class="w-1/2 flex flex-col justify-between bg-secondary text-accent p-5 rounded-card min-h-[180px] sm:min-h-[220px]">
+      <h3 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">Dr. James Holloway</h3>
+      <p class="font-semibold text-lg sm:text-xl text-zinc-400">CTO, <span class="text-white">DeepMind</span></p>
+    </div>
+    <div class="w-1/2 overflow-hidden rounded-card">
+      <Image 
+        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-100 hover:scale-105" 
+        src={james} 
+        alt="Dr. James Holloway, CTO of Google DeepMind delivering keynote panel address"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </article>
+
+  <article class="speaker-card flex gap-3 sm:gap-4 opacity-0 will-change-transform">
+    <div class="w-1/2 overflow-hidden rounded-card">
+      <Image 
+        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-100 hover:scale-105" 
+        src={johns} 
+        alt="Dr. Johns Ellery, European Commission AI Policy Advisor hosting governance workshop"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="w-1/2 flex flex-col justify-between bg-secondary text-accent p-5 rounded-card min-h-[180px] sm:min-h-[220px]">
+      <h3 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">Dr. Johns Ellery</h3>
+      <p class="font-semibold text-lg sm:text-xl text-zinc-400">AI Policy Advisor, <span class="text-white">EU Commission</span></p>
+    </div>
+  </article>
+
+  <article class="speaker-card flex gap-3 sm:gap-4 opacity-0 will-change-transform">
+    <div class="w-1/2 overflow-hidden rounded-card">
+      <Image 
+        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-100 hover:scale-105" 
+        src={jimmy} 
+        alt="Dr. Jimmy Caldwell presenting machine learning research from Stanford AI Lab"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="w-1/2 flex flex-col justify-between bg-secondary text-accent p-5 rounded-card min-h-[180px] sm:min-h-[220px]">
+      <h3 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">Dr. Jimmy Caldwell</h3>
+      <p class="font-semibold text-lg sm:text-xl text-zinc-400"><span class="text-white">Stanford AI Lab</span></p>
+    </div>
+  </article>
+
+</section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion) {
+    // Select all speaker elements
+    const cards = document.querySelectorAll(".speaker-card");
+
+    // Loop through them so each card gets its own dedicated viewport entrance trigger
+    cards.forEach((card) => {
+      gsap.fromTo(card, 
+        { 
+          opacity: 0, 
+          y: 30, 
+          scale: 0.98 
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,            // Triggers exactly when *this* card comes into view
+            start: "top 85%",          // Starts when top of card is 15% above the viewport bottom
+            toggleActions: "play none none none"
+          }
+        }
+      );
+    });
+  } else {
+    // Accessible fallback: instantly display cards safely
+    gsap.to(".speaker-card", { opacity: 1, duration: 0.2 });
+  }
+</script>

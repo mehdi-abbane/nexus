@@ -1,0 +1,102 @@
+---
+import Layout from "@src/layouts/Layout.astro";
+import ContactForm from '@src/components/ContactForm.astro'
+import TicketOptions from '@src/components/TicketOptions.astro'
+import Timer from '@src/components/Timer.astro'
+import Agenda from '@src/components/Agenda.astro'
+import Attend from '@src/components/Attend.astro'
+import union_1 from '@src/assets/images/union-1.svg'
+import Slider from '@src/components/Slider.astro'
+import BrandsSlider from '@src/components/BrandsSlider.astro'
+import Team from '@src/components/Team.astro'
+import Navbar from "@src/components/Navbar.astro";
+import Image from "astro/components/Image.astro";
+import Hero from '@src/components/Hero.astro'
+import Cards from '@src/components/Cards.astro'
+---
+
+<Layout>
+	<Navbar />
+	<Hero/>
+
+	<BrandsSlider/>
+	<Cards/>
+	<header class="header-title flex flex-wrap justify-between items-center my-10">
+		<h3 class="text-7xl font-bold">AGENDA</h3>
+		<p>
+		October 15-17, 2052 | Horizon <br/> Convention Center, Amesterdam
+		</p>
+	</header>
+	<Agenda/>
+
+	<header class="header-title flex flex-wrap justify-between items-center my-10">
+		<h3 class="text-7xl font-bold">KEYNOTES <br/>SPEAKERS</h3>
+		<p>
+		Meet the Industry leaders<br/> shaping the future of AI.
+		</p>
+	</header>
+
+	<Team/>
+	<button class="flex p-5 border-1 border-white rounded-card gap-3">
+		<span>And more</span>
+		<Image src={union_1} alt="arrow up right"/>
+	</button>
+
+	<header class="header-title flex flex-wrap justify-between items-center my-10">
+		<h3 class="text-7xl font-bold">WHY ATTEND ?</h3>
+		<p>
+		Discover why Next-Gen AI <br/> Summit is the must-attend event <br/>for AI professionals, innovators, <br/> and industry leaders.
+
+		</p>
+	</header>
+	<Attend/>
+
+	<section>
+		<Slider/>
+	</section>
+
+	<header class="header-title flex flex-wrap justify-between items-center my-10">
+		<h3 class="text-7xl font-bold">REGISTER <br/> NOW</h3>
+		<p>
+		Secure your spot at the Next-Gen AI <br/> Summit 2052 and join <br/> the future of AI innovation.
+
+		</p>
+	</header>
+	<Timer/>
+	<TicketOptions/>	
+		<ContactForm/>
+</Layout>
+<script>
+
+	import gsap from 'gsap'
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+const tl = gsap.timeline()
+	gsap.registerPlugin(ScrollTrigger)
+	gsap.to(".slow-spinner", {
+		rotation: 360,
+		duration: 60,
+		ease: "none",
+		repeat: -1
+	})
+	tl.from(".header-title h3", {
+		stagger: 0.15,
+		x: -100,
+		opacity: 0,
+		scrollTrigger: {
+			trigger: '.header-title',
+			start: "top 80%",
+			toggleActions: "play none none none"
+		}
+
+	}).from(".header-title p", {
+		stagger: 0.15,
+		x: 100,
+		opacity: 0,
+		scrollTrigger: {
+			trigger: '.header-title',
+			start: "top 80%",
+			toggleActions: "play none none none"
+		}
+	})
+</script>
+

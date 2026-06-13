@@ -1,0 +1,177 @@
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": "Ticket Options",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "price": "299.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/LimitedAvailability",
+        "itemOffered": {
+          "@type": "Ticket",
+          "name": "EARLY BIRD PASS",
+          "description": "Limited time offer access pass"
+        }
+      },
+      {
+        "@type": "Offer",
+        "price": "399.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {
+          "@type": "Ticket",
+          "name": "STANDARD PASS",
+          "description": "Standard event admission pass"
+        }
+      },
+      {
+        "@type": "Offer",
+        "price": "699.00",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "itemOffered": {
+          "@type": "Ticket",
+          "name": "VIP EXPERIENCE",
+          "description": "Includes exclusive speaker meetups & front-row seating"
+        }
+      }
+    ]
+  }
+</script>
+
+<section class="my-20 w-full bg-black text-white px-4 overflow-x-hidden" aria-labelledby="tickets-heading">
+    <h2 id="tickets-heading" class="text-5xl md:text-7xl font-bold mb-20 tracking-tight text-center lg:text-left">Ticket Options</h2>
+    
+    <ul class="pricing-grid-container flex flex-col lg:flex-row gap-6 justify-center w-full max-w-7xl mx-auto relative">
+        
+        <li class="pricing-card border border-white/20 hover:border-primary hover:bg-primary rounded-card p-6 flex flex-col justify-between items-start opacity-0 will-change-transform w-full min-h-[380px]">
+            <div class="w-full flex flex-col gap-4 flex-grow">
+                <h3 class="font-bold text-2xl tracking-tight">EARLY BIRD PASS</h3>
+                <p class="text-zinc-400 font-medium text-base">Limited time offer access pass</p>
+            </div>
+            <div class="w-full mt-auto">
+                <p class="font-bold text-5xl mb-6 tracking-tight">$299</p>
+                <a href="#checkout-early" aria-label="Purchase Early Bird Pass for 299 dollars" class="text-lg font-semibold rounded-card bg-primary text-white flex items-center justify-center p-4 gap-4 w-full transition-colors duration-200">
+                    <span>Get your ticket</span>
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="pointer-events-none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.89715 1.12408C4.89715 0.503267 5.41394 0 6.05142 0H15.8457C16.4832 0 17 0.503267 17 1.12408V10.6622C17 11.283 16.4832 11.7863 15.8457 11.7863C15.2082 11.7863 14.6915 11.283 14.6915 10.6622V3.83784L1.97046 16.2261C1.51969 16.6651 0.788848 16.6651 0.338078 16.2261C-0.112693 15.7871 -0.112693 15.0754 0.338078 14.6364L13.0591 2.24816H6.05142C5.41394 2.24816 4.89715 1.74489 4.89715 1.12408Z" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </li>
+
+        <li class="pricing-card border border-white/20 hover:border-primary hover:bg-primary rounded-card p-6 flex flex-col justify-between items-start opacity-0 will-change-transform w-full min-h-[380px]">
+            <div class="w-full flex flex-col gap-4 flex-grow">
+                <h3 class="font-bold text-2xl tracking-tight">STANDARD PASS</h3>
+                <p class="text-zinc-400 font-medium text-base">Standard event admission pass</p>
+            </div>
+            <div class="w-full mt-auto">
+                <p class="font-bold text-5xl mb-6 tracking-tight">$399</p>
+                <a href="#checkout-standard" aria-label="Purchase Standard Pass for 399 dollars" class="text-lg font-semibold rounded-card bg-primary text-white flex items-center justify-center p-4 gap-4 w-full transition-colors duration-200">
+                    <span>Get your ticket</span>
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="pointer-events-none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.89715 1.12408C4.89715 0.503267 5.41394 0 6.05142 0H15.8457C16.4832 0 17 0.503267 17 1.12408V10.6622C17 11.283 16.4832 11.7863 15.8457 11.7863C15.2082 11.7863 14.6915 11.283 14.6915 10.6622V3.83784L1.97046 16.2261C1.51969 16.6651 0.788848 16.6651 0.338078 16.2261C-0.112693 15.7871 -0.112693 15.0754 0.338078 14.6364L13.0591 2.24816H6.05142C5.41394 2.24816 4.89715 1.74489 4.89715 1.12408Z" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </li>
+
+        <li class="pricing-card border border-white/20 hover:border-primary hover:bg-primary rounded-card p-6 flex flex-col justify-between items-start opacity-0 will-change-transform w-full min-h-[380px]">
+            <div class="w-full flex flex-col gap-4 flex-grow">
+                <h3 class="font-bold text-2xl tracking-tight">VIP EXPERIENCE</h3>
+                <p class="text-zinc-400 font-medium text-base">Includes exclusive speaker meetups & front-row seating</p>
+            </div>
+            <div class="w-full mt-auto">
+                <p class="font-bold text-5xl mb-6 tracking-tight">$699</p>
+                <a href="#checkout-vip" aria-label="Purchase VIP Experience Pass for 699 dollars" class="text-lg font-semibold rounded-card bg-primary text-white flex items-center justify-center p-4 gap-4 w-full transition-colors duration-200">
+                    <span>Get your ticket</span>
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="pointer-events-none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.89715 1.12408C4.89715 0.503267 5.41394 0 6.05142 0H15.8457C16.4832 0 17 0.503267 17 1.12408V10.6622C17 11.283 16.4832 11.7863 15.8457 11.7863C15.2082 11.7863 14.6915 11.283 14.6915 10.6622V3.83784L1.97046 16.2261C1.51969 16.6651 0.788848 16.6651 0.338078 16.2261C-0.112693 15.7871 -0.112693 15.0754 0.338078 14.6364L13.0591 2.24816H6.05142C5.41394 2.24816 4.89715 1.74489 4.89715 1.12408Z" fill="currentColor"/>
+                    </svg>
+                </a>
+            </div>
+        </li>
+
+    </ul>
+</section>
+
+<style> 
+    .pricing-card {
+        transition: background-color 200ms ease, border-color 200ms ease;
+    }
+    .pricing-card:hover a {
+        color: var(--color-accent, #000) !important;
+        background-color: var(--color-secondary, #fff) !important;
+    }
+</style>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!prefersReducedMotion) {
+        const gridContainer = document.querySelector(".pricing-grid-container");
+        const cards = document.querySelectorAll(".pricing-card");
+
+        // The master timeline triggers when the overall wrapper component enters the viewport
+        const mainTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: gridContainer,
+                start: "top 75%", // Triggers cleanly when the top is comfortably on screen
+                toggleActions: "play none none none"
+            }
+        });
+
+        // Set initial card states instantly before the reveal execution starts
+        gsap.set(cards, { opacity: 0 });
+
+        cards.forEach((card, index) => {
+            // 1. Calculate bounding coordinates to figure out spatial positioning delta
+            const containerRect = gridContainer.getBoundingClientRect();
+            const cardRect = card.getBoundingClientRect();
+
+            // 2. Find the strict horizontal visual center of the parent container
+            const containerCenterX = containerRect.left + containerRect.width / 2;
+            // Find the horizontal visual center of this individual target column
+            const cardCenterX = cardRect.left + cardRect.width / 2;
+
+            // 3. Calculate exactly how many pixels left or right this card needs to shift to touch center
+            const xOffsetFromCenter = containerCenterX - cardCenterX;
+
+            // 4. On mobile screens (stacked cards), we shift vertically instead of horizontally
+            const isMobileStack = window.innerWidth < 1024;
+            const positionOffsetFromCenter = isMobileStack ? 60 * index : 0;
+
+            // 5. Build out our fan reveal pipeline timeline
+            mainTimeline.fromTo(card, 
+                {
+                    opacity: 0,
+                    // If desktop, fly out from exact center coordinates. If mobile, slide up from underneath each other.
+                    x: isMobileStack ? 0 : xOffsetFromCenter,
+                    y: isMobileStack ? positionOffsetFromCenter : 0,
+                    scale: 0.9,
+                    zIndex: 10 - index // Stack cards neatly over one another sequentially
+                },
+                {
+                    opacity: 1,
+                    x: 0, // Snaps perfectly out into its natural CSS Column grid position
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: "power3.out"
+                },
+                index * 0.15 // Elegant delayed stagger reveal mapping
+            );
+        });
+
+    } else {
+        // Safe core web vitals fallback path
+        gsap.to(".pricing-card", { opacity: 1, duration: 0.2 });
+    }
+</script>
