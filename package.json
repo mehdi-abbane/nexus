@@ -1,33 +1,34 @@
 {
-	"name": "11ty-starter",
-	"version": "1.0.0",
-	"main": "index.js",
-	"scripts": {
-		"clean": "rm -rf _site",
-		"watch:eleventy": "npx eleventy --serve",
-		"watch:tailwind": "npx @tailwindcss/cli -i ./src/scss/main.css -o ./src/scss/output.css --watch",
-		"start": "run-p watch:tailwind watch:eleventy "
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"description": "",
-	"devDependencies": {
-		"@11ty/eleventy": "^3.1.6",
-		"autoprefixer": "^10.5.0",
-		"npm-run-all": "^4.1.5",
-		"postcss": "^8.5.15",
-		"sass": "^1.101.0",
-		"tailwindcss": "^4.3.1"
-	},
-	"dependencies": {
-		"@11ty/eleventy-img": "^6.0.4",
-		"@tailwindcss/cli": "^4.3.1",
-		"@tailwindcss/postcss": "^4.3.1",
-		"clean-css": "^5.3.3",
-		"common-tags": "^1.8.2",
-		"gsap": "^3.15.0",
-		"html-minifier-terser": "^7.2.0",
-		"path": "^0.12.7"
-	}
+  "name": "nexus",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx eleventy",
+    "clean": "rm -rf _site",
+    "watch:eleventy": "npx eleventy --serve",
+    "watch:tailwind": "npx @tailwindcss/cli -i ./src/scss/main.css -o ./src/scss/output.css --watch",
+    "start": "run-p watch:tailwind watch:eleventy "
+  },
+  "keywords": [],
+  "author": "Mehdi Abbane",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "autoprefixer": "^10.5.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.5.15",
+    "sass": "^1.101.0",
+    "tailwindcss": "^4.3.1"
+  },
+  "dependencies": {
+    "@11ty/eleventy-img": "^6.0.4",
+    "@tailwindcss/cli": "^4.3.1",
+    "@tailwindcss/postcss": "^4.3.1",
+    "clean-css": "^5.3.3",
+    "common-tags": "^1.8.2",
+    "gsap": "^3.15.0",
+    "html-minifier-terser": "^7.2.0",
+    "path": "^0.12.7"
+  }
 }

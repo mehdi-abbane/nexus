@@ -1,6 +1,7 @@
-// Register GSAP plugins
+// Register GSAP plugin once globally
 gsap.registerPlugin(ScrollTrigger);
 
+// Cache media query lookup
 const prefersReducedMotion = window.matchMedia(
 	"(prefers-reduced-motion: reduce)",
 ).matches;
@@ -10,14 +11,17 @@ const prefersReducedMotion = window.matchMedia(
 | Highlight Cards Animation
 |--------------------------------------------------------------------------
 */
-
 function initHighlightCards() {
 	const cards = document.querySelectorAll(".highlight-card");
+	if (!cards.length) return;
 
+	// Batch initial opacities to prevent immediate style re-calculations
 	gsap.to(".agenda-surface", { opacity: 1, duration: 0.1 });
-	if (prefersReducedMotion) {
 
-		// 4. Animate the background decoration spinner on its own scroll trigger
+	if (prefersReducedMotion) {
+		// --- REDUCED MOTION PIPELINE ---
+
+		// 4. Background decoration spinner
 		gsap.from(".agenda-spinner", {
 			opacity: 0,
 			scale: 0.7,
@@ -30,14 +34,10 @@ function initHighlightCards() {
 			},
 		});
 
+		// Sponsors Reveal
 		gsap.fromTo(
 			".sponsors-list",
-			{
-				opacity: 0,
-				// We use y (vertical) instead of x (horizontal).
-				// Shifting a marquee horizontally while it runs horizontally creates immediate layout thrashing.
-				y: 30,
-			},
+			{ opacity: 0, y: 30 },
 			{
 				opacity: 1,
 				y: 0,
@@ -51,145 +51,143 @@ function initHighlightCards() {
 			},
 		);
 
+		// Instantly normalize elements
 		gsap.set(".highlight-card, .card-number", {
 			opacity: 1,
 			x: 0,
 			clearProps: "all",
 		});
+
 		const tl = gsap.timeline({
-			defaults: {
-				duration: 0.6,
-				ease: "power2.out",
-			},
+			defaults: { duration: 0.6, ease: "power2.out" },
 		});
 
-		// Step 1: Smoothly reveal overall container container first to avoid layout shifts
 		tl.to(".entry-surface", { opacity: 1, duration: 0.3 })
-
-			// Step 2: Animate text layout fields with low pixel bounds to protect core web paint metrics
 			.from("#time", { y: -20, opacity: 0 }, "+=0.1")
 			.from("#address", { x: 20, opacity: 0 }, "<")
-
-			// Clean waterfall execution chain using structural stagger offsets
 			.from("#hero-title", { y: 20, opacity: 0 }, "-=0.2")
 			.from("#hero-desc", { y: 20, opacity: 0 }, "-=0.3")
 			.from(".hero-spinner", { scale: 0.8, opacity: 0 }, "-=0.4");
+
 		const gridContainer = document.querySelector(".pricing-grid-container");
-		const cards = document.querySelectorAll(".pricing-card");
+		const pricingCards = document.querySelectorAll(".pricing-card");
 
-		// The master timeline triggers when the overall wrapper component enters the viewport
-		const mainTimeline = gsap.timeline({
-			scrollTrigger: {
-				trigger: gridContainer,
-				start: "top 75%", // Triggers cleanly when the top is comfortably on screen
-				toggleActions: "play none none none",
-			},
-		});
+		if (gridContainer && pricingCards.length) {
+			const mainTimeline = gsap.timeline({
+				scrollTrigger: {
+					trigger: gridContainer,
+					start: "top 75%",
+					toggleActions: "play none none none",
+				},
+			});
 
-		// Set initial card states instantly before the reveal execution starts
-		gsap.set(cards, { opacity: 0 });
+			gsap.set(pricingCards, { opacity: 0 });
 
-		cards.forEach((card, index) => {
-			// 1. Calculate bounding coordinates to figure out spatial positioning delta
-			const containerRect = gridContainer.getBoundingClientRect();
-			const cardRect = card.getBoundingClientRect();
-
-			// 2. Find the strict horizontal visual center of the parent container
-			const containerCenterX = containerRect.left + containerRect.width / 2;
-			// Find the horizontal visual center of this individual target column
-			const cardCenterX = cardRect.left + cardRect.width / 2;
-
-			// 3. Calculate exactly how many pixels left or right this card needs to shift to touch center
-			const xOffsetFromCenter = containerCenterX - cardCenterX;
-
-			// 4. On mobile screens (stacked cards), we shift vertically instead of horizontally
+			// FIX: Read layout measurements entirely BEFORE writing to DOM to eliminate layout thrashing
 			const isMobileStack = window.innerWidth < 1024;
-			const positionOffsetFromCenter = isMobileStack ? 60 * index : 0;
+			const containerRect = gridContainer.getBoundingClientRect();
+			const containerCenterX = containerRect.left + containerRect.width / 2;
 
-			// 5. Build out our fan reveal pipeline timeline
-			mainTimeline.fromTo(
-				card,
-				{
-					opacity: 0,
-					// If desktop, fly out from exact center coordinates. If mobile, slide up from underneath each other.
-					x: isMobileStack ? 0 : xOffsetFromCenter,
-					y: isMobileStack ? positionOffsetFromCenter : 0,
-					scale: 0.9,
-					zIndex: 10 - index, // Stack cards neatly over one another sequentially
-				},
-				{
-					opacity: 1,
-					x: 0, // Snaps perfectly out into its natural CSS Column grid position
-					y: 0,
-					scale: 1,
-					duration: 0.8,
-					ease: "power3.out",
-				},
-				index * 0.15, // Elegant delayed stagger reveal mapping
-			);
-		});
+			// Map calculations array cleanly before animating
+			const cardTransforms = Array.from(pricingCards).map((card) => {
+				const cardRect = card.getBoundingClientRect();
+				const cardCenterX = cardRect.left + cardRect.width / 2;
+				return containerCenterX - cardCenterX;
+			});
 
+			pricingCards.forEach((card, index) => {
+				const xOffsetFromCenter = cardTransforms[index];
+				const positionOffsetFromCenter = isMobileStack ? 60 * index : 0;
+
+				mainTimeline.fromTo(
+					card,
+					{
+						opacity: 0,
+						x: isMobileStack ? 0 : xOffsetFromCenter,
+						y: isMobileStack ? positionOffsetFromCenter : 0,
+						scale: 0.9,
+						zIndex: 10 - index,
+					},
+					{
+						opacity: 1,
+						x: 0,
+						y: 0,
+						scale: 1,
+						duration: 0.8,
+						ease: "power3.out",
+					},
+					index * 0.15,
+				);
+			});
+		}
+
+		// Use standard CSS transitions for endless linear infinite spins instead of GSAP ticks
 		gsap.to(".slow-spinner", {
 			rotation: 360,
 			duration: 60,
 			ease: "none",
 			repeat: -1,
 		});
-		tl.from(".header-title h3", {
-			stagger: 0.15,
-			x: -100,
-			opacity: 0,
-			scrollTrigger: {
-				trigger: ".header-title",
-				start: "top 80%",
-				toggleActions: "play none none none",
-			},
-		}).from(".header-title p", {
-			stagger: 0.15,
-			x: 100,
-			opacity: 0,
-			scrollTrigger: {
-				trigger: ".header-title",
-				start: "top 80%",
-				toggleActions: "play none none none",
-			},
-		});
 
-		return;
-	} else {
-		gsap.to(".agenda-surface", { opacity: 1, duration: 0.2 });
-
-		// 2. Grab all individual list items
-		const agendaItems = document.querySelectorAll(".agenda-item");
-
-		// 3. Loop through each item and give it an isolated ScrollTrigger
-		agendaItems.forEach((item) => {
-			gsap.from(item, {
+		const headerTitle = document.querySelector(".header-title");
+		if (headerTitle) {
+			gsap.from(".header-title h3", {
+				stagger: 0.15,
+				x: -100,
 				opacity: 0,
-				y: 40,
-				clipPath: "inset(0% 0% 100% 0%)", // Premium "wipe down" mask effect
-				duration: 0.8,
-				ease: "power3.out",
 				scrollTrigger: {
-					trigger: item, // Each individual <li> triggers itself
-					start: "top 85%", // Triggers when the TOP of the item hits 85% of viewport height
-					toggleActions: "play none none none", // Plays once when viewed
+					trigger: headerTitle,
+					start: "top 80%",
+					toggleActions: "play none none none",
 				},
 			});
-		});
-		gsap.to(".entry-surface", { opacity: 1, duration: 0.2 });
-		gsap.to(".pricing-card", { opacity: 1, duration: 0.2 });
+			gsap.from(".header-title p", {
+				stagger: 0.15,
+				x: 100,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: headerTitle,
+					start: "top 80%",
+					toggleActions: "play none none none",
+				},
+			});
+		}
 
-		gsap.to(".event-grid-surface", { opacity: 1, duration: 0.3 });
-
-		gsap.to(".speaker-card", { opacity: 1, duration: 0.2 });
-
-		gsap.to(".highlight-card, .card-number", { opacity: 1, duration: 0.2 });
+		// CRITICAL: Exit function early here so standard interactions aren't accidentally layered below!
+		return;
 	}
 
+	// --- STANDARD ANIMATION PIPELINE (Reduced Motion is False) ---
+	gsap.to(".agenda-surface", { opacity: 1, duration: 0.2 });
+
+	// Use GSAP ScrollTrigger batching instead of loop-generated isolated triggers for major overhead reduction
+	ScrollTrigger.batch(".agenda-item", {
+		start: "top 85%",
+		onEnter: (batch) => {
+			gsap.from(batch, {
+				opacity: 0,
+				y: 40,
+				clipPath: "inset(0% 0% 100% 0%)",
+				duration: 0.8,
+				ease: "power3.out",
+				stagger: 0.15,
+			});
+		},
+		once: true,
+	});
+
+	gsap.to(
+		[".entry-surface", ".pricing-card", ".event-grid-surface", ".speaker-card"],
+		{
+			opacity: 1,
+			duration: 0.2,
+			stagger: 0.05,
+		},
+	);
+
+	// Animate Highlight Cards smoothly
 	cards.forEach((card) => {
 		const number = card.querySelector(".card-number");
-
 		if (!number) return;
 
 		const side = card.dataset.side;
@@ -203,6 +201,7 @@ function initHighlightCards() {
 					trigger: card,
 					start: "top 85%",
 					toggleActions: "play none none none",
+					invalidateOnRefresh: true, // recalculates smoothly on window resizes
 				},
 			})
 			.to(card, {
@@ -212,16 +211,8 @@ function initHighlightCards() {
 			})
 			.fromTo(
 				number,
-				{
-					opacity: 0,
-					x: initialX,
-				},
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.8,
-					ease: "power2.out",
-				},
+				{ opacity: 0, x: initialX },
+				{ opacity: 1, x: 0, duration: 0.8, ease: "power2.out" },
 				"-=0.2",
 			);
 	});
@@ -232,16 +223,13 @@ function initHighlightCards() {
 | Event Grid Animation
 |--------------------------------------------------------------------------
 */
-
 function initEventGridAnimation() {
 	if (prefersReducedMotion) {
-		gsap.set(".event-grid-surface", {
-			opacity: 1,
-			clearProps: "opacity",
-		});
-
+		gsap.set(".event-grid-surface", { opacity: 1, clearProps: "opacity" });
 		return;
 	}
+
+	if (!document.querySelector(".event-grid-surface")) return;
 
 	gsap
 		.timeline({
@@ -250,35 +238,12 @@ function initEventGridAnimation() {
 				start: "top 85%",
 				toggleActions: "play none none none",
 			},
-			defaults: {
-				duration: 0.6,
-				ease: "power2.out",
-			},
+			defaults: { duration: 0.6, ease: "power2.out" },
 		})
-		.to(".event-grid-surface", {
-			opacity: 1,
-			duration: 0.2,
-		})
-		.from(".main-card", {
-			y: 30,
-			opacity: 0,
-		})
-		.from(
-			".card-1",
-			{
-				y: 20,
-				opacity: 0,
-			},
-			"-=0.3",
-		)
-		.from(
-			".card-2",
-			{
-				y: 20,
-				opacity: 0,
-			},
-			"-=0.4",
-		);
+		.to(".event-grid-surface", { opacity: 1, duration: 0.2 })
+		.from(".main-card", { y: 30, opacity: 0 })
+		.from(".card-1", { y: 20, opacity: 0 }, "-=0.3")
+		.from(".card-2", { y: 20, opacity: 0 }, "-=0.4");
 }
 
 /*
@@ -286,43 +251,40 @@ function initEventGridAnimation() {
 | Testimonials Slider
 |--------------------------------------------------------------------------
 */
-
 function initTestimonialSlider() {
 	const prevBtn = document.getElementById("prev-btn");
 	const nextBtn = document.getElementById("next-btn");
 	const slider = document.getElementById("slider-deck");
+	if (!prevBtn || !nextBtn || !slider) return;
 
-	const cards = Array.from(document.querySelectorAll(".exact-layout-card"));
-
-	if (!prevBtn || !nextBtn || !slider || cards.length === 0) {
-		return;
-	}
+	const cards = document.querySelectorAll(".exact-layout-card");
+	const len = cards.length;
+	if (len === 0) return;
 
 	let activeIndex = 1;
 	let startX = 0;
 
+	// Use a token class on the parent instead of editing classLists on every single item in a loop
 	function updateLayout() {
 		cards.forEach((card, index) => {
 			card.classList.remove("pos-center", "pos-left", "pos-right");
-
 			if (index === activeIndex) {
 				card.classList.add("pos-center");
-			} else if (index === (activeIndex - 1 + cards.length) % cards.length) {
+			} else if (index === (activeIndex - 1 + len) % len) {
 				card.classList.add("pos-left");
-			} else if (index === (activeIndex + 1) % cards.length) {
+			} else if (index === (activeIndex + 1) % len) {
 				card.classList.add("pos-right");
 			}
 		});
 	}
 
 	function goNext() {
-		activeIndex = (activeIndex + 1) % cards.length;
+		activeIndex = (activeIndex + 1) % len;
 		updateLayout();
 	}
 
 	function goPrev() {
-		activeIndex = (activeIndex - 1 + cards.length) % cards.length;
-
+		activeIndex = (activeIndex - 1 + len) % len;
 		updateLayout();
 	}
 
@@ -337,18 +299,15 @@ function initTestimonialSlider() {
 		{ passive: true },
 	);
 
-	slider.addEventListener("touchend", (event) => {
-		const endX = event.changedTouches[0].clientX;
-		const deltaX = startX - endX;
-
-		if (deltaX > 50) {
-			goNext();
-		}
-
-		if (deltaX < -50) {
-			goPrev();
-		}
-	});
+	slider.addEventListener(
+		"touchend",
+		(event) => {
+			const deltaX = startX - event.changedTouches[0].clientX;
+			if (deltaX > 50) goNext();
+			else if (deltaX < -50) goPrev();
+		},
+		{ passive: true }, // Made touchEnd passive since preventDefault isn't called
+	);
 
 	updateLayout();
 }
@@ -358,14 +317,11 @@ function initTestimonialSlider() {
 | App Initialization
 |--------------------------------------------------------------------------
 */
-
 function initAnimations() {
-	const ctx = gsap.context(() => {
+	return gsap.context(() => {
 		initHighlightCards();
 		initEventGridAnimation();
 	});
-
-	return ctx;
 }
 
 function init() {
@@ -373,4 +329,9 @@ function init() {
 	initTestimonialSlider();
 }
 
-document.addEventListener("DOMContentLoaded", init);
+// Check if document is already interactive/complete to avoid missing immediate execution state
+if (document.readyState === "loading") {
+	document.addEventListener("DOMContentLoaded", init);
+} else {
+	init();
+}
