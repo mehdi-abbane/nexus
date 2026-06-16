@@ -1,0 +1,42 @@
+<section aria-label="Featured Keynote Speakers" class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-10 w-full bg-black text-white overflow-hidden">
+  
+  {% for speaker in team %}
+    {# Evaluates the loop cycle index to alternate the visual checkerboard layout (Cards 1 & 2 vs 3 & 4) #}
+    {% set isTextFirst = (loop.index0 % 4 < 2) %}
+
+    <article class="speaker-card flex gap-3 sm:gap-4  will-change-transform">
+      
+      {% if isTextFirst %}
+        <div class="w-1/2 flex flex-col justify-between bg-secondary text-accent p-5 rounded-card min-h-[180px] sm:min-h-[220px]">
+          <h3 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">{{ speaker.name }}</h3>
+          <p class="font-semibold text-lg sm:text-xl text-zinc-400">
+            {{ speaker.jobTitle }}{% if speaker.jobTitle and speaker.company %}, {% endif %}
+            <span class="text-white">{{ speaker.company }}</span>
+          </p>
+        </div>
+      {% endif %}
+
+      <div class="w-1/2 overflow-hidden rounded-card">
+        <img 
+          class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 ease-out scale-100 hover:scale-105" 
+          src="/assets/images/{{ speaker.image }}" 
+          alt="{{ speaker.name }}, {{ speaker.jobTitle or 'Speaker' }} at {{ speaker.company }} presenting at Next-Gen AI Summit"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+
+      {% if not isTextFirst %}
+        <div class="w-1/2 flex flex-col justify-between bg-secondary text-accent p-5 rounded-card min-h-[180px] sm:min-h-[220px]">
+          <h3 class="font-bold text-2xl sm:text-3xl tracking-tight text-white">{{ speaker.name }}</h3>
+          <p class="font-semibold text-lg sm:text-xl text-zinc-400">
+            {{ speaker.jobTitle }}{% if speaker.jobTitle and speaker.company %}, {% endif %}
+            <span class="text-white">{{ speaker.company }}</span>
+          </p>
+        </div>
+      {% endif %}
+
+    </article>
+  {% endfor %}
+
+</section>

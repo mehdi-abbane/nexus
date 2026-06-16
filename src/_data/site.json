@@ -1,0 +1,11 @@
+{
+  "name": "nexus",
+  "description": "Fast modern web development site",
+  "url": "https://mehdiabbane.netlify.app",
+  "logo": "/assets/images/B1.svg",
+  "ogImage": "/assets/images/B2.svg",
+  "twitterUsername": "@mehdi_abbane",
+  "locale": "en_US",
+  "keywords": ["web", "development", "eleventy", "tailwind", "mehdi abbane", "mehdi", "mahdi", "abbane", "aban", "abban", "Mehdi Abbane", "mehdi aban", "mahdi abbane", "mahdi aban"]
+}
+

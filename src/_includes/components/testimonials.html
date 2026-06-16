@@ -1,0 +1,68 @@
+
+<section class="bg-black text-white overflow-hidden select-none antialiased">
+  <div class="mx-auto">
+    
+    <header class=" flex-col md:flex-row flex justify-between items-center my-10">
+      <h3 class="text-7xl font-bold">What Past Attendees Say</h3>
+      <div class="flex gap-2">
+        <button id="prev-btn" class="p-5 border-1 rounded-full slide-button transition-colors duration-200 hover:bg-zinc-900 focus:outline-none active:scale-95 transform">
+          <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89611 0.329247C8.44534 -0.109733 7.71449 -0.109733 7.26372 0.329247L0.338103 7.07372C-0.112667 7.5127 -0.112667 8.22442 0.338103 8.6634L7.26372 15.4079C7.71449 15.8469 8.44534 15.8469 8.89611 15.4079C9.34688 14.9689 9.34688 14.2572 8.89611 13.8182L3.94095 8.99264H21.9312C22.5686 8.99264 23.0854 8.48937 23.0854 7.86856C23.0854 7.24775 22.5686 6.74448 21.9312 6.74448L3.94095 6.74448L8.89611 1.91893C9.34688 1.47995 9.34688 0.768227 8.89611 0.329247Z" fill="white"/>
+          </svg>
+        </button>
+
+        <button id="next-btn" class="rotate-180 p-5 border-1 rounded-full slide-button transition-colors duration-200 hover:bg-zinc-900 focus:outline-none active:scale-95 transform">
+          <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.89611 0.329247C8.44534 -0.109733 7.71449 -0.109733 7.26372 0.329247L0.338103 7.07372C-0.112667 7.5127 -0.112667 8.22442 0.338103 8.6634L7.26372 15.4079C7.71449 15.8469 8.44534 15.8469 8.89611 15.4079C9.34688 14.9689 9.34688 14.2572 8.89611 13.8182L3.94095 8.99264H21.9312C22.5686 8.99264 23.0854 8.48937 23.0854 7.86856C23.0854 7.24775 22.5686 6.74448 21.9312 6.74448L3.94095 6.74448L8.89611 1.91893C9.34688 1.47995 9.34688 0.768227 8.89611 0.329247Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="relative w-full h-[400px] flex items-center justify-center">
+      <div id="slider-deck" class="relative w-full h-full max-w-5xl">
+        
+        {# Transformed Loop using Nunjucks / Eleventy Syntax #}
+        {% for item in testimonials %}
+          <div 
+            data-index="{{ loop.index0 }}"
+            class="exact-layout-card absolute top-0 left-1/2 w-[88vw] sm:w-[440px] h-[380px] rounded-[32px] p-8 md:p-10 flex flex-col justify-between box-border
+              {% if item.variant == 'blue' %}bg-[#0047FF] text-white{% endif %}
+              {% if item.variant == 'dark' %}bg-[#131316] border border-zinc-900 text-zinc-500{% endif %}
+              {% if item.variant == 'light' %}bg-[#E5E5E7] text-black{% endif %}"
+          >
+            <div>
+              <span class="block text-xs font-bold tracking-[0.15em] mb-5 uppercase font-mono
+                {% if item.variant == 'blue' %}text-blue-200{% endif %}
+                {% if item.variant == 'dark' %}text-zinc-600{% endif %}
+                {% if item.variant == 'light' %}text-zinc-500{% endif %}">
+                {{ item.title }}
+              </span>
+              <p class="text-[16px] md:text-[18px] font-normal leading-relaxed tracking-tight
+                {% if item.variant == 'blue' %}text-white{% endif %}
+                {% if item.variant == 'dark' %}text-zinc-400{% endif %}
+                {% if item.variant == 'light' %}text-zinc-800{% endif %}">
+                "{{ item.quote }}"
+              </p>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <img src="{{ item.avatar }}" alt="{{ item.name }}" class="w-11 h-11 rounded-full object-cover" />
+              <div>
+                <h4 class="font-bold text-sm tracking-tight {% if item.variant == 'light' %}text-black{% else %}text-white{% endif %}">
+                  {{ item.name }}
+                </h4>
+                <p class="text-xs font-medium mt-0.5 {% if item.variant == 'blue' %}text-blue-200{% else %}text-zinc-500{% endif %}">
+                  {{ item.role }}
+                </p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+
+  </div>
+</section>
+

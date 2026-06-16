@@ -1,0 +1,40 @@
+{% set seo = seoContext %}
+
+<meta name="description" content="{{ seo.description }}">
+<meta property="og:type" content="{{ seo.ogType }}">
+<meta property="og:title" content="{{ seo.title }}">
+<meta property="og:url" content="{{ seo.fullUrl }}">
+<meta property="og:image" content="{{ ogImage or site.ogImage }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo.title }}">
+<meta name="twitter:description" content="{{ seo.description }}">
+<meta name="twitter:image" content="{{ ogImage or site.ogImage }}">
+{% if site.twitterUsername %}
+<meta name="twitter:creator" content="{{ site.twitterUsername }}">
+{% endif %}
+
+{# ---------------- KEYWORDS (optional) ---------------- #}
+{% if tags or site.keywords %}
+<meta name="keywords" content="{{ (tags or site.keywords) | join(', ') }}">
+{% endif %}
+{% set type = collectionType or "pages" %}
+
+{% set seo = {
+  title: title or site.name,
+  description: description or site.description,
+  fullUrl: site.url ~ page.url,
+  ogType: "website",
+  type: type
+} %}
+
+{% if type == "blog" or type == "projects" %}
+  {% set seo = {
+    title: title,
+    description: description or site.description,
+    fullUrl: site.url ~ page.url,
+    ogType: "article",
+    type: type
+  } %}
+{% endif %}
+

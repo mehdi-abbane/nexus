@@ -1,0 +1,21 @@
+[ {
+    "src": "/assets/images/amazon.svg",
+    "alt": "Amazon Web Services - Enterprise AI Sponsor"
+  },
+  {
+    "src": "/assets/images/dribble.svg",
+    "alt": "Dribbble - Official Design Track Partner"
+  },
+  {
+    "src": "/assets/images/hubspot.svg",
+    "alt": "HubSpot - Marketing Automation Partner"
+  },
+  {
+    "src": "/assets/images/gumroad.svg",
+    "alt": "Gumroad - Creator Economy Sponsor"
+  },
+  {
+    "src": "/assets/images/notion.svg",
+    "alt": "Notion - Productivity and Workspace Sponsor"
+  }
+]

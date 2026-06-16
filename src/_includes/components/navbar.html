@@ -1,0 +1,41 @@
+<header class="syne relative z-50 bg-black text-white px-6 py-4">
+    <nav class="flex items-center justify-between max-w-7xl mx-auto" aria-label="Main Navigation">
+        
+        <a class="font-bold text-3xl tracking-tight leading-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded" href="#home">
+            nexus
+        </a>
+        
+        <button id="menu-toggle" 
+                class="flex items-center justify-center h-9 w-9 md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded" 
+                aria-label="Open navigation menu" 
+                aria-expanded="false" 
+                aria-controls="nav-menu">
+            
+            <svg id="hamburger-icon" class="w-7 h-7 transition-transform duration-300" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg id="close-icon" class="w-7 h-7 hidden transition-transform duration-300" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <ul id="nav-menu" 
+            aria-hidden="true"
+            class="
+            absolute top-full left-0 w-full bg-black flex flex-col items-center gap-6 text-lg py-8 shadow-xl
+            transform -translate-y-full transition-[transform,opacity] duration-300 ease-in-out -z-10 opacity-0 invisible
+            
+            /* Desktop layout */
+            md:static md:flex md:flex-row md:items-center md:translate-y-[3px] md:w-auto md:p-0 md:gap-1 md:shadow-none md:transform-none md:opacity-100 md:visible
+        ">
+            <li><a class="inline-flex items-center justify-center px-4 py-2 border-1 border-transparent hover:border-white focus-visible:border-white rounded-full leading-none transition-colors duration-150 focus-visible:outline-none" href="#home">Home</a></li>
+            <li><a class="inline-flex items-center justify-center px-4 py-2 border border-transparent hover:border-white focus-visible:border-white rounded-full leading-none transition-colors duration-150 focus-visible:outline-none" href="#schedule">Schedule</a></li>
+            <li><a class="inline-flex items-center justify-center px-4 py-2 border border-transparent hover:border-white focus-visible:border-white rounded-full leading-none transition-colors duration-150 focus-visible:outline-none" href="#speakers">Speakers</a></li>
+            <li><a class="inline-flex items-center justify-center px-4 py-2 border border-transparent hover:border-white focus-visible:border-white rounded-full leading-none transition-all duration-150 focus-visible:outline-none" href="#tickets">Tickets</a></li>
+            <li><a class="inline-flex items-center justify-center px-4 py-2 border border-transparent hover:border-white focus-visible:border-white rounded-full leading-none transition-colors duration-150 focus-visible:outline-none" href="#venue">Venue</a></li>
+            <li><a class="inline-flex items-center justify-center px-4 py-2 border border-transparent hover:border-white focus-visible:border-white rounded-full leading-none transition-colors duration-150 focus-visible:outline-none" href="#sponsors">Sponsors</a></li>
+        </ul>
+    </nav>
+</header>
+
+

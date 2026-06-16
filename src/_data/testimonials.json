@@ -1,0 +1,26 @@
+[
+  {
+    "title": "GAME-CHANGING INSIGHTS",
+    "quote": "This summit opened my eyes to the potential of AI and how it will shape industries.",
+    "name": "Mark Vandenberg",
+    "role": "CTO, NeuralTech",
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80",
+    "variant": "dark"
+  },
+  {
+    "title": "THE BEST AI EVENT!",
+    "quote": "Incredible speakers, top-tier networking, and cutting-edge discussions all in one place.",
+    "name": "Elena Rojas",
+    "role": "AI Researcher, DeepMind",
+    "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&auto=format&fit=crop&q=80",
+    "variant": "blue"
+  },
+  {
+    "title": "UNMATCHED OPPORTUNITIES",
+    "quote": "From hands-on workshops to visionary talks, this summit is a must-attend for AI professionals.",
+    "name": "David Laurent",
+    "role": "CEO, FutureAI Labs",
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80",
+    "variant": "light"
+  }
+]

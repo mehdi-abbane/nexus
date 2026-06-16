@@ -1,0 +1,102 @@
+.exact-layout-card {
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.75s ease;
+  will-change: transform, opacity;
+}
+
+/* Desktop Stacking Layout System */
+@media (min-width: 640px) {
+  .exact-layout-card.pos-center {
+    transform: translateX(-50%) scale(1);
+    z-index: 30;
+    opacity: 1;
+  }
+  .exact-layout-card.pos-right {
+    transform: translateX(calc(-50% + 440px + 24px)) scale(1);
+    z-index: 25;
+    opacity: 1;
+  }
+  .exact-layout-card.pos-left {
+    transform: translateX(-132%) scale(0.94);
+    z-index: 10;
+    opacity: 0.35;
+  }
+}
+/* Mobile Presentation Adjustments */
+@media (max-width: 639px) {
+  .exact-layout-card.pos-center {
+    transform: translateX(-50%) scale(1);
+    z-index: 30;
+    opacity: 1;
+  }
+  .exact-layout-card.pos-left {
+    transform: translateX(-150%) scale(0.9);
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .exact-layout-card.pos-right {
+    transform: translateX(8%) scale(0.94);
+    z-index: 20;
+    opacity: 0.4;
+  }
+}
+.slide-button {
+  transition: all 150ms;
+}
+.slide-button:hover {
+  background-color: var(--color-secondary);
+}
+.slide-button:hover svg path {
+  fill: var(--color-primary);
+}
+
+.marquee-viewport {
+  mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
+}
+
+/* Keep CSS loop perfectly simple. Handled entirely on the GPU composite layer */
+.execution-track {
+  animation: loopConveyor 35s linear infinite;
+}
+
+/* Pauses animation when tab is inactive or user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .execution-track {
+    animation-play-state: paused;
+  }
+}
+@keyframes loopConveyor {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    /* Matching standard negative flex gap layout perfectly without dynamic calc paints */
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+.agenda-spinner {
+  animation: spinInfinite 40s linear infinite;
+}
+
+@keyframes spinInfinite {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .agenda-spinner {
+    animation-play-state: paused;
+  }
+}
+.pricing-card {
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.pricing-card:hover a {
+  color: var(--color-accent, #000) !important;
+  background-color: var(--color-secondary, #fff) !important;
+}

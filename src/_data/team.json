@@ -1,0 +1,27 @@
+[
+	{
+		"name": "Dr. Edward Kane",
+		"jobTitle": "Chief AI Scientist",
+		"company": "OpenAI",
+		"image": "pexels-a-darmel.webp"
+	},
+	{
+		"name": "Dr. James Holloway",
+		"jobTitle": "CTO",
+		"company": "DeepMind",
+		"image": "pexels-ketut-subiyanto.webp"
+	},
+	{
+		"name": "Dr. Johns Ellery",
+		"jobTitle": "AI Policy Advisor",
+		"company": "EU Commission",
+		"image" : "pexels-maide-arslan.webp"
+
+	},
+	{
+		"name": "Dr. Jimmy Caldwell",
+		"jobTitle": "",
+		"company": "Stanford AI Lab",
+		"image" : "pexels-uiliamnornberg.webp"
+	}
+]

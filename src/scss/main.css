@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@source "../_includes/components/**/*.njk";
+@source "../_includes/components/**/*.html";
+@theme {
+  /* Colors */
+  --color-primary: #0147FF;
+  --color-secondary:#DEDEE0 ;
+  --color-accent: #1A1A1A;
+
+  /* Fonts */
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Border Radius */
+  --radius-card: 35px;
+
+  /* Shadows */
+  --shadow-card: 0 10px 30px rgb(0 0 0 / 0.1);
+
+  /* Breakpoints */
+  --breakpoint-3xl: 120rem;
+}
+
+
+* {
+	@apply box-border;
+}
+
+html {
+	scrollbar-gutter: stable;
+}
+
+body {
+	@apply m-0 bg-stone-50 p-0 text-stone-800 transition-all duration-300 dark:bg-stone-800 dark:text-stone-50;
+	background-color: black;
+}
+

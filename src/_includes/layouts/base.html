@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% for style in styles or [] %}
+    <link rel="stylesheet" href="{{ style }}">
+{% endfor %}
+{% include "partials/basehead.html" %}
+{% include "partials/seo.html" %}
+{% include "partials/breadcrumbs.html" %}
+</head>
+<body>
+	<main class="p-5 md:p-20">
+	{{content | safe}}	
+	</main>
+</body>
+{% include "scripts.html" %}
+{% for script in scripts or [] %}
+    <script  src="{{ script }}" defer> <script/>
+{% endfor %}
+
+</html>
