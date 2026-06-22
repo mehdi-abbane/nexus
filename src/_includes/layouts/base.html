@@ -7,15 +7,16 @@
 {% include "partials/basehead.html" %}
 {% include "partials/seo.html" %}
 {% include "partials/breadcrumbs.html" %}
+
 </head>
 <body>
-	<main class="p-5 md:p-20">
+	<main class="prose prose-zinc max-w-none">
 	{{content | safe}}	
 	</main>
 </body>
-{% include "scripts.html" %}
+{% include "scripts.html"%}
 {% for script in scripts or [] %}
-    <script  src="{{ script }}" defer> <script/>
+    <script  src="{{ script }}" > <script/>
 {% endfor %}
 
 </html>

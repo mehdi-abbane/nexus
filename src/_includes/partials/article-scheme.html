@@ -1,0 +1,20 @@
+{% if collectionType == "blog" or collectionType == "projects" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ title }}",
+  "description": "{{ description or site.description }}",
+  "url": "{{ site.url }}{{ page.url | url }}",
+
+  "datePublished": "{{ page.date.toISOString() | htmlDateString  }}",
+  "dateModified": "{{ page.date.toISOString() | htmlDateString }}",
+
+  "author": {
+    "@type": "Organization",
+    "name": "{{ site.name }}"
+  }
+}
+</script>
+{% endif %}
+

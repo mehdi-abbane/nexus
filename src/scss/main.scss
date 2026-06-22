@@ -1,0 +1,122 @@
+/**
+ * ==========================================================================
+ * Global Design Tokens & Base Styles (_tokens.scss or _base.scss)
+ * ==========================================================================
+ */
+
+/* --------------------------------------------------------------------------
+   1. Semantic Theme Variables
+   -------------------------------------------------------------------------- */
+$color-primary: #0147FF;
+$color-secondary: #DEDEE0;
+$color-accent: #1A1A1A;
+
+
+/* --------------------------------------------------------------------------
+   2. Spacing Scale (Mathematical 4px/8px grid system)
+   -------------------------------------------------------------------------- */
+$space-xs: 0.25rem; // 4px
+$space-sm: 0.5rem; // 8px
+$space-md: 1rem; // 16px
+$space-lg: 1.5rem; // 24px
+$space-xl: 2rem; // 32px
+$space-2xl: 3rem; // 48px
+$space-3xl: 4rem; // 64px
+$space-4xl: 5rem;
+$space-5xl: 6rem;
+$space-6xl: 7rem;
+$space-7xl: 8rem;
+$space-8xl: 9rem;
+$space-9xl: 10rem;
+$space-10xl: 11rem;
+$space-11xl: 12rem;
+$space-12xl: 13rem;
+$radius-card: $space-2xl;
+
+
+/* --------------------------------------------------------------------------
+   3. Typography & Layout Baselines
+   -------------------------------------------------------------------------- */
+$font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+$max-width: 75rem; // 1200px container max-width
+$font-heading: $space-xl;
+$font-body: $space-lg;
+
+
+/* --------------------------------------------------------------------------
+   4. Global Document Resets & Base Overrides
+   -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  font-family: "Bricolage Grotesque", $font-sans; // Added system fallback
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding: $space-md;
+}
+
+@media (min-width: 48rem) {
+  body {
+    padding: $space-xl $space-3xl;
+
+  }
+
+}
+
+body {
+  font-family: "Syne", sans-serif;
+  background-color: black;
+  margin: 0;
+  scroll-behavior: smooth;
+  font-size: 1rem; // 16px baseline
+}
+
+/* Headings Baseline */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: $space-md;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* Global Container Utility */
+.l-container {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $space-lg;
+  padding-right: $space-lg;
+}
+
+/* --------------------------------------------------------------------------
+   5. Lenis Smooth Scroll Overrides
+   -------------------------------------------------------------------------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important; // Disables native CSS scroll-behavior which fights Lenis
+}
+
+.lenis.lenis-smooth [data-lens-prevent] {
+  scroll-behavior: contain; // Keeps inner scrolling items like maps/modals safe
+}

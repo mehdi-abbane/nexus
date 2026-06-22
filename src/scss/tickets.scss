@@ -1,0 +1,144 @@
+// Variables / Design Tokens
+$color-black: #000000;
+$color-white: #ffffff;
+$color-primary: #0047FF; // Presuming early layout primary hex color
+$color-zinc-400: #a1a1aa;
+
+$radius-card: 24px;
+$breakpoint-lg: 1024px;
+$breakpoint-md: 768px;
+
+.pricing-section {
+  width: 100%;
+  background-color: $color-black;
+  color: $color-white;
+  padding: 5rem 1rem;
+  overflow-x: hidden;
+}
+
+.pricing-title {
+  font-size: clamp(3rem, 6vw, 4.5rem); // Fluid typography reduces CLS layout shift
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-align: center;
+  margin: 0 0 5rem 0;
+  line-height: 1.1;
+
+  @media (min-width: $breakpoint-lg) {
+    text-align: left;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.pricing-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 80rem; // max-w-7xl
+  position: relative;
+
+  @media (min-width: $breakpoint-lg) {
+    flex-direction: row;
+  }
+}
+
+.pricing-card {
+  width: 100%;
+  min-height: 380px;
+  border: 1px solid rgba($color-white, 0.2);
+  border-radius: $radius-card;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-sizing: border-box;
+  
+  // Opacity & animation preparation for clean initial loads
+  opacity: 1; // Swap to 0 dynamically if handling with JS IntersectionObservers
+  will-change: transform, background-color, border-color;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+
+  &:hover {
+    border-color: $color-primary;
+    background-color: $color-primary;
+
+    .card-btn {
+      background-color: $color-white;
+      color: $color-black;
+    }
+    .card-description {
+      color: rgba($color-white, 0.8);
+    }
+  }
+}
+
+.card-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+.card-tier {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.card-description {
+  color: $color-zinc-400;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+  transition: color 0.25s ease;
+}
+
+.card-footer {
+  width: 100%;
+  margin-top: auto;
+}
+
+.card-price {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.5rem 0;
+}
+
+.card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: $radius-card;
+  background-color: $color-primary;
+  color: $color-white;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  svg {
+    flex-shrink: 0;
+    pointer-events: none;
+    
+    path {
+      fill: currentColor;
+    }
+  }
+}

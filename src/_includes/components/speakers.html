@@ -10,7 +10,7 @@
   </header>
 
   <div class="c-speakers__grid">
-    {% for speaker in team %}
+    {% for speaker in speakers %}
       {# Alternates layout orientation safely: (Cards 1 & 2 vs 3 & 4) #}
       {% set isTextFirst = (loop.index0 % 4 < 2) %}
 

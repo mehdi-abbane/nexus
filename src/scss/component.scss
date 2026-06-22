@@ -1,0 +1,80 @@
+// ==========================================================================
+// Component: [Name] (`.c-[name]`)
+// Description: [What this component does]
+// ==========================================================================
+
+.c-change-me {
+  /* ------------------------------------------------------------------------
+     1. Mobile Default Styles (Base View)
+     ------------------------------------------------------------------------ */
+  // Layout (display, flex, grid, margin, padding)
+  
+  // Visuals (background, border, border-radius)
+  
+  // Typography (font-size, color, line-height)
+  
+
+
+  /* ------------------------------------------------------------------------
+     2. Interactive States & Modifiers
+     ------------------------------------------------------------------------ */
+  &:hover {
+    
+  }
+
+  &:focus-within {
+    
+  }
+  
+  &--modifier-name {
+    // For variations (e.g., .c-change-me--large)
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Child Elements
+   -------------------------------------------------------------------------- */
+
+.c-change-me__child {
+  // Styles for nested elements
+}
+
+
+/* ==========================================================================
+   Responsive Breakpoints (Mobile-First / min-width)
+   ========================================================================== */
+
+/* Small Devices / Large Phones (576px / 36rem and up) */
+@media (min-width: 36rem) {
+  .c-change-me {
+    
+  }
+}
+
+/* Medium Devices / Tablets (768px / 48rem and up) */
+@media (min-width: 48rem) {
+  .c-change-me {
+    
+  }
+}
+
+/* Large Devices / Laptops (992px / 62rem and up) */
+@media (min-width: 62rem) {
+  .c-change-me {
+    
+  }
+}
+
+/* Extra Large / Desktops (1200px / 75rem and up) */
+@media (min-width: 75rem) {
+  .c-change-me {
+    
+  }
+}
+
+/* Ultra-wides / Large Screens (1400px / 87.5rem and up) */
+@media (min-width: 87.5rem) {
+  .c-change-me {
+    
+  }
+}

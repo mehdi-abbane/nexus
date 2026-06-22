@@ -1,0 +1,280 @@
+// ==========================================================================
+// Component: Performance-Isolated Stacking Testimonials Deck
+// ==========================================================================
+
+@use "main" as *;
+@use "sass:color";
+
+// Variables / Design Tokens
+$color-black: #000000;
+$color-white: #ffffff;
+$color-zinc-900: #18181b;
+$color-zinc-800: #27272a;
+$color-zinc-600: #52525b;
+$color-zinc-500: #71717a;
+$color-zinc-400: #a1a1aa;
+
+$card-blue-bg: #0047FF;
+$card-blue-light: #bfdbfe;
+$card-dark-bg: #131316;
+$card-light-bg: #E5E5E7;
+
+$breakpoint-md: 768px;
+$breakpoint-sm: 640px;
+
+// Section Setup
+.testimonial-section {
+  background-color: $color-black;
+  color: $color-white;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Header & Navigation Controls
+.testimonial-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+  }
+}
+
+.testimonial-heading {
+  font-size: clamp(2.5rem, 5vw, 4.5rem); // Fluid typography prevents CLS
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.slider-controls {
+  display: flex;
+  gap: 0.5rem;
+
+  #next-btn {
+    transform: rotate(180deg);
+
+    &:active {
+      transform: rotate(180deg) scale(0.95);
+    }
+  }
+}
+
+.slide-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: transparent;
+  color: $color-white;
+  border: 1px solid rgba($color-white, 0.2);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 100ms ease;
+  will-change: transform;
+
+  svg {
+    display: block;
+    
+    path {
+      fill: currentColor;
+    }
+  }
+
+  &:hover {
+    background-color: var(--color-secondary, #{$color-zinc-900});
+
+    svg path {
+      fill: var(--color-primary, #{$color-white});
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $card-blue-bg;
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Slider Deck Container
+.slider-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-deck {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 64rem; // max-w-5xl
+}
+
+// Card Core Styles & Layout Stacking Engine
+.testimonial-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 88vw;
+  height: 380px;
+  border-radius: 32px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 0;
+  transform: translateX(-50%) scale(0.9);
+  will-change: transform, opacity;
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              z-index 0.75s step-end;
+
+  @media (min-width: $breakpoint-sm) {
+    width: 440px;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    padding: 2.5rem;
+  }
+
+  // --- Dynamic Layout States ---
+  &.pos-center {
+    opacity: 1;
+    visibility: visible;
+    z-index: 30;
+    transform: translateX(-50%) scale(1);
+  }
+
+  &.pos-left {
+    visibility: visible;
+    z-index: 10;
+    
+    @media (min-width: $breakpoint-sm) {
+      opacity: 0.35;
+      transform: translateX(-132%) scale(0.94);
+    }
+
+    @media (max-width: 639px) {
+      opacity: 0;
+      transform: translateX(-150%) scale(0.9);
+      pointer-events: none;
+    }
+  }
+
+  &.pos-right {
+    visibility: visible;
+    z-index: 20;
+
+    @media (min-width: $breakpoint-sm) {
+      opacity: 1;
+      transform: translateX(calc(-50% + 440px + 24px)) scale(1);
+    }
+
+    @media (max-width: 639px) {
+      opacity: 0.4;
+      transform: translateX(8%) scale(0.94);
+    }
+  }
+}
+
+// Typography Components inside Cards
+.card-tag {
+  display: block;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.25rem;
+}
+
+.card-quote {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.625;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.card-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  background-color: $color-zinc-800;
+}
+
+.author-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.author-role {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 0.125rem 0 0 0;
+}
+
+// Card Variant Themes
+.card--blue {
+  background-color: $card-blue-bg;
+  color: $color-white;
+
+  .card-tag { color: $card-blue-light; }
+  .card-quote { color: $color-white; }
+  .author-name { color: $color-white; }
+  .author-role { color: $card-blue-light; }
+}
+
+.card--dark {
+  background-color: $card-dark-bg;
+  border: 1px solid $color-zinc-900;
+  color: $color-zinc-500;
+
+  .card-tag { color: $color-zinc-600; }
+  .card-quote { color: $color-zinc-400; }
+  .author-name { color: $color-white; }
+  .author-role { color: $color-zinc-500; }
+}
+
+.card--light {
+  background-color: $card-light-bg;
+  color: $color-black;
+
+  .card-tag { color: $color-zinc-500; }
+  .card-quote { color: $color-zinc-800; }
+  .author-name { color: $color-black; }
+  .author-role { color: $color-zinc-500; }
+}

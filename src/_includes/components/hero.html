@@ -1,6 +1,5 @@
-<section
-  class="bg-accent rounded-card relative flex flex-col gap-10 overflow-hidden p-10 opacity-0 entry-surface mb-20"
->
+<section class="c-hero-event" aria-labelledby="hero-title">
+  
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -30,44 +29,33 @@
     }
   </script>
 
-  <header class="flex justify-between text-lg font-medium">
-    <time id="time" datetime="2026-10-15T09:00">OCTOBER 15-17, 2026</time>
-    <address id="address" class="text-right not-italic">
+  <header class="c-hero-event__meta">
+    <time datetime="2026-10-15T09:00" class="c-hero-event__time">OCTOBER 15-17, 2026</time>
+    <address class="c-hero-event__address">
       Horizon Convention Center, TechCity, Utopolis
     </address>
   </header>
 
-  <div>
-    <h2
-      id="hero-title"
-      class="mb-10 text-7xl font-bold tracking-tight uppercase"
-    >
-      NEXT-GEN AI <br />
-      SUMMIT
-    </h2>
+  <div class="c-hero-event__content">
+    <h1 id="hero-title" class="c-hero-event__title">
+      Next-Gen AI<br>Summit
+    </h1>
 
-    <p
-      id="hero-desc"
-      class="mb-10 max-w-2xl text-xl leading-relaxed text-zinc-300"
-    >
+    <p class="c-hero-event__desc">
       Join leading artificial intelligence innovators, data scientists, and
       machine learning engineers at the premier global tech conference. Secure
       your access to explore next-generation generative AI models, deep learning
       strategy, and exclusive industry networking.
     </p>
 
-    <a
-      href="#tickets"
-      class="rounded-card from-primary to-dark inline-block bg-gradient-to-r p-2 text-center font-semibold transition-transform hover:scale-[1.02]"
-      title="Register for Next-Gen AI Summit Early Bird Tickets"
-    >
-      Secure Early Bird Tickets
+    <a href="#tickets" class="c-hero-event__cta" title="Register for Next-Gen AI Summit Early Bird Tickets">
+      <span class="c-hero-event__cta-text">Secure Early Bird Tickets</span>
     </a>
   </div>
 
   <img
     eleventy:ignore
-    class="agenda-spinner absolute top-1 right-0 will-change-transform"
+    class="c-hero-event__spinner c-hero-event__image"
     src="/assets/images/B1.svg"
     alt=""
     aria-hidden="true"

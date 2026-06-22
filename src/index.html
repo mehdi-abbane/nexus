@@ -1,50 +1,55 @@
 ---
 layout: layouts/base.html
 title: nexus
+name: mehdi
+tags:
+- ai
+- event
+- summit
+- gen
+- ai event summit
+- advance
+- speaking
+- speakers
+- mehdi
+- abbane
+- mehdi abbane
+- mahdi
+- aban
+- mahdi abbane
+- mahdi abban
+- mahdi aban
+- mehdi aban
+- mehdi abbane
+- AI
+- Artificial Intilligence
+- Event
+- AI Summit
+- chatGPT
+- OpenAI
 styles: 
-- /scss/components.css
-
+- /scss/navbar.css
+- /scss/hero.css
+- /scss/sponsors.css
+- /scss/speakers.css
+- /scss/agenda.css
+- /scss/why-attend.css
+- /scss/testimonials.css
+- /scss/tickets.css
+- /scss/contact.css
+- /scss/footer.css
 scripts:
-- /js/animation.js
 - /js/testimonials.js
+- /js/animation.js
+- /js/navbar.js
 ---
 {% include "components/navbar.html" %}
 {% include "components/hero.html" %}
 {% include "components/sponsors.html" %}
-{% include "components/cards.html" %}
-<header class="header-title flex flex-wrap justify-between items-center my-20">
-	<h3 class="text-7xl font-bold">AGENDA</h3>
-	<p>
-	October 15-17, 2052 | Horizon <br/> Convention Center, Amesterdam
-	</p>
-</header>
-
 {% include "components/agenda.html" %}
-	<header class="header-title flex flex-wrap justify-between items-center my-20">
-		<h3 class="text-7xl font-bold">KEYNOTES <br/>SPEAKERS</h3>
-		<p>
-		Meet the Industry leaders<br/> shaping the future of AI.
-		</p>
-	</header>
-
-{% include "components/team.html" %}
-	<button class="flex p-5 border-1 border-white rounded-card gap-3">
-		<span>And more</span>
-		<img eleventy:ignore src="/assets/images/union-1.svg" alt="arrow up right"/>
-	</button>
-
-		<header class="header-title flex flex-wrap justify-between items-center my-10">
-		<h3 class="text-7xl font-bold">WHY ATTEND ?</h3>
-		<p>
-		Discover why Next-Gen AI <br/> Summit is the must-attend event <br/>for AI professionals, innovators, <br/> and industry leaders.
-
-		</p>
-	</header>
-
-{% include "components/attend.html" %}
+{% include "components/speakers.html" %}
+{% include "components/why-attend.html" %}
 {% include "components/testimonials.html" %}
-{% include "components/ticketoptions.html" %}
-{% include "components/contactform.html" %}
+{% include "components/tickets.html" %}
+{% include "components/contact.html" %}
 {% include "components/footer.html" %}
-
-

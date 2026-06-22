@@ -1,11 +1,11 @@
 {
-  "name": "nexus",
-  "description": "Fast modern web development site",
-  "url": "https://mehdiabbane.netlify.app",
-  "logo": "/assets/images/B1.svg",
-  "ogImage": "/assets/images/B2.svg",
+  "name": "Nexus",
+  "description": " Join leading artificial intelligence innovators, data scientists, and machine learning engineers at the premier global tech conference. Secure your access to explore next-generation generative AI models, deep learning strategy, and exclusive industry networking. ",
+  "url": "https://nexus-mehdi-abbane.netlify.app/",
+  "logo": "/assets/B1.svg",
+  "ogImage": "/assets/og.webp",
+  "ogType": "website",
   "twitterUsername": "@mehdi_abbane",
   "locale": "en_US",
-  "keywords": ["web", "development", "eleventy", "tailwind", "mehdi abbane", "mehdi", "mahdi", "abbane", "aban", "abban", "Mehdi Abbane", "mehdi aban", "mahdi abbane", "mahdi aban"]
+  "keywords": ["web", "development", "eleventy", "tailwind"]
 }
-

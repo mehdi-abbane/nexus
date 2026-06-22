@@ -1,12 +1,9 @@
 ---
 permalink: /robots.txt
-eleventyExcludeFromCollections: true
+layout: null
 ---
+
 User-agent: *
 Allow: /
 
-# Prevent indexing of system or duplicate files if applicable
-Disallow: /404.html
-
-# Explicit Sitemap Path
 Sitemap: {{ site.url }}/sitemap.xml

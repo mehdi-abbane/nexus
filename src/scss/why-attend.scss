@@ -1,0 +1,153 @@
+// ==========================================================================
+// Component: Performance-Optimized Why Attend Block Section (`.c-why-attend`)
+// ==========================================================================
+
+@use "main" as *;
+@use "sass:color";
+
+.c-why-attend {
+  width: 100%;
+  margin-top: $space-xl;    // my-10 baseline token layout
+  margin-bottom: $space-2xl;
+
+  /* ------------------------------------------------------------------------
+     1. Shared Header Component Block
+     ------------------------------------------------------------------------ */
+  &-header {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    margin-bottom: $space-2xl; // Strict decoupled layout separation
+    
+    @media (min-width: 48rem) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &__title {
+      font-family: $font-heading;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    &__desc {
+      font-family: $font-body;
+      font-size: 1.125rem;
+      line-height: 1.4;
+      color: color.scale($color-secondary, $lightness: 20%);
+      margin: 0;
+      
+      @media (min-width: 48rem) {
+        text-align: right;
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     2. Layout Cards Array Grid Grid Wrapper
+     ------------------------------------------------------------------------ */
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-md; // gap-4 matching spacing tokens parameters
+    width: 100%;
+    background-color: #000000;
+    color: #ffffff;
+    
+    @media (min-width: 48rem) { // md: breakpoint
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+/* ==========================================================================
+   Sub-Component: Interactive Layout Block Features (`.c-highlight-card`)
+   ========================================================================== */
+.c-highlight-card {
+  position: relative;
+  background-color: $color-accent; // #1A1A1A
+  border-radius: $radius-card;     // 35px
+  padding: $space-2xl $space-xl;   // py-10 p-5 baseline tracking parameters
+  overflow: hidden;
+  will-change: transform;
+  opacity: 1;                      // Managed safely via structural hooks
+
+  &__title {
+    position: relative;
+    z-index: 10;
+    font-family: $font-heading;
+    font-size: 1.125rem;            // text-lg
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;         // tracking-wider
+    margin: 0 0 $space-2xl 0;       // mb-10 equivalent
+  }
+
+  &__body {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+
+    @media (min-width: 48rem) {
+      grid-template-columns: repeat(2, 1fr); // Replaces empty spacing nodes natively
+    }
+  }
+
+  &__text {
+    font-family: $font-body;
+    font-size: 1.25rem;            // text-xl
+    line-height: 1.6;
+    color: color.scale($color-secondary, $lightness: 10%); // zinc-200 contrast replacement
+    margin: 0;
+  }
+
+  /* Decorative absolute layout numbers background elements layer */
+  &__number {
+    position: absolute;
+    top: $space-xs;
+    font-size: clamp(8rem, 15vw, 15rem); // Fluid background scale bounds to stop clipping shifts
+    line-height: 1;
+    font-weight: 700;
+    // Warning-free color alpha mapping
+    color: color.scale($color-primary, $alpha: -80%); 
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.15; // Set base state visibility cleanly instead of layout blinking layers
+  }
+
+  /* ------------------------------------------------------------------------
+     3. Left vs Right Alignment Modifier Variations (Grid Row Offset Simulation)
+     ------------------------------------------------------------------------ */
+  &--left {
+    .c-highlight-card__number {
+      left: 0;
+      transform-origin: left center;
+    }
+    .c-highlight-card__text {
+      @media (min-width: 48rem) {
+        grid-column: 2; // Pushes text over into the right column without needing a blank <p> tag
+      }
+    }
+  }
+
+  &--right {
+    .c-highlight-card__number {
+      right: 0;
+      transform-origin: right center;
+    }
+    .c-highlight-card__text {
+      @media (min-width: 48rem) {
+        grid-column: 1; // Content renders explicitly on left block column bounds
+      }
+    }
+  }
+}

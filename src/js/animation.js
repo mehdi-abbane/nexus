@@ -1,337 +1,352 @@
-// Register GSAP plugin once globally
-gsap.registerPlugin(ScrollTrigger);
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+import Lenis from "lenis";
 
-// Cache media query lookup
-const prefersReducedMotion = window.matchMedia(
-	"(prefers-reduced-motion: reduce)",
-).matches;
+// Register Layout Engines
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-/*
-|--------------------------------------------------------------------------
-| Highlight Cards Animation
-|--------------------------------------------------------------------------
-*/
-function initHighlightCards() {
-	const cards = document.querySelectorAll(".highlight-card");
-	if (!cards.length) return;
+/**
+ * 0. Optimized Smooth Scroll Engine Configuration
+ */
+function initSmoothScroll() {
+    const lenis = new Lenis({
+        lerp: 0.06, // Slightly lighter damping reduces layout backlogs
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+    });
 
-	// Batch initial opacities to prevent immediate style re-calculations
-	gsap.to(".agenda-surface", { opacity: 1, duration: 0.1 });
+    lenis.on("scroll", ScrollTrigger.update);
 
-	if (prefersReducedMotion) {
-		// --- REDUCED MOTION PIPELINE ---
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
 
-		// 4. Background decoration spinner
-		gsap.from(".agenda-spinner", {
-			opacity: 0,
-			scale: 0.7,
-			duration: 1.2,
-			ease: "power2.out",
-			scrollTrigger: {
-				trigger: ".agenda-spinner",
-				start: "top 90%",
-				toggleActions: "play none none none",
-			},
-		});
-
-		// Sponsors Reveal
-		gsap.fromTo(
-			".sponsors-list",
-			{ opacity: 0, y: 30 },
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.8,
-				ease: "power2.out",
-				scrollTrigger: {
-					trigger: ".sponsors-list",
-					start: "top 90%",
-					toggleActions: "play none none none",
-				},
-			},
-		);
-
-		// Instantly normalize elements
-		gsap.set(".highlight-card, .card-number", {
-			opacity: 1,
-			x: 0,
-			clearProps: "all",
-		});
-
-		const tl = gsap.timeline({
-			defaults: { duration: 0.6, ease: "power2.out" },
-		});
-
-		tl.to(".entry-surface", { opacity: 1, duration: 0.3 })
-			.from("#time", { y: -20, opacity: 0 }, "+=0.1")
-			.from("#address", { x: 20, opacity: 0 }, "<")
-			.from("#hero-title", { y: 20, opacity: 0 }, "-=0.2")
-			.from("#hero-desc", { y: 20, opacity: 0 }, "-=0.3")
-			.from(".hero-spinner", { scale: 0.8, opacity: 0 }, "-=0.4");
-
-		const gridContainer = document.querySelector(".pricing-grid-container");
-		const pricingCards = document.querySelectorAll(".pricing-card");
-
-		if (gridContainer && pricingCards.length) {
-			const mainTimeline = gsap.timeline({
-				scrollTrigger: {
-					trigger: gridContainer,
-					start: "top 75%",
-					toggleActions: "play none none none",
-				},
-			});
-
-			gsap.set(pricingCards, { opacity: 0 });
-
-			// FIX: Read layout measurements entirely BEFORE writing to DOM to eliminate layout thrashing
-			const isMobileStack = window.innerWidth < 1024;
-			const containerRect = gridContainer.getBoundingClientRect();
-			const containerCenterX = containerRect.left + containerRect.width / 2;
-
-			// Map calculations array cleanly before animating
-			const cardTransforms = Array.from(pricingCards).map((card) => {
-				const cardRect = card.getBoundingClientRect();
-				const cardCenterX = cardRect.left + cardRect.width / 2;
-				return containerCenterX - cardCenterX;
-			});
-
-			pricingCards.forEach((card, index) => {
-				const xOffsetFromCenter = cardTransforms[index];
-				const positionOffsetFromCenter = isMobileStack ? 60 * index : 0;
-
-				mainTimeline.fromTo(
-					card,
-					{
-						opacity: 0,
-						x: isMobileStack ? 0 : xOffsetFromCenter,
-						y: isMobileStack ? positionOffsetFromCenter : 0,
-						scale: 0.9,
-						zIndex: 10 - index,
-					},
-					{
-						opacity: 1,
-						x: 0,
-						y: 0,
-						scale: 1,
-						duration: 0.8,
-						ease: "power3.out",
-					},
-					index * 0.15,
-				);
-			});
-		}
-
-		// Use standard CSS transitions for endless linear infinite spins instead of GSAP ticks
-		gsap.to(".slow-spinner", {
-			rotation: 360,
-			duration: 60,
-			ease: "none",
-			repeat: -1,
-		});
-
-		const headerTitle = document.querySelector(".header-title");
-		if (headerTitle) {
-			gsap.from(".header-title h3", {
-				stagger: 0.15,
-				x: -100,
-				opacity: 0,
-				scrollTrigger: {
-					trigger: headerTitle,
-					start: "top 80%",
-					toggleActions: "play none none none",
-				},
-			});
-			gsap.from(".header-title p", {
-				stagger: 0.15,
-				x: 100,
-				opacity: 0,
-				scrollTrigger: {
-					trigger: headerTitle,
-					start: "top 80%",
-					toggleActions: "play none none none",
-				},
-			});
-		}
-
-		// CRITICAL: Exit function early here so standard interactions aren't accidentally layered below!
-		return;
-	}
-
-	// --- STANDARD ANIMATION PIPELINE (Reduced Motion is False) ---
-	gsap.to(".agenda-surface", { opacity: 1, duration: 0.2 });
-
-	// Use GSAP ScrollTrigger batching instead of loop-generated isolated triggers for major overhead reduction
-	ScrollTrigger.batch(".agenda-item", {
-		start: "top 85%",
-		onEnter: (batch) => {
-			gsap.from(batch, {
-				opacity: 0,
-				y: 40,
-				clipPath: "inset(0% 0% 100% 0%)",
-				duration: 0.8,
-				ease: "power3.out",
-				stagger: 0.15,
-			});
-		},
-		once: true,
-	});
-
-	gsap.to(
-		[".entry-surface", ".pricing-card", ".event-grid-surface", ".speaker-card"],
-		{
-			opacity: 1,
-			duration: 0.2,
-			stagger: 0.05,
-		},
-	);
-
-	// Animate Highlight Cards smoothly
-	cards.forEach((card) => {
-		const number = card.querySelector(".card-number");
-		if (!number) return;
-
-		const side = card.dataset.side;
-		const initialX = side === "left" ? -80 : 80;
-
-		gsap.set(card, { opacity: 0 });
-
-		gsap
-			.timeline({
-				scrollTrigger: {
-					trigger: card,
-					start: "top 85%",
-					toggleActions: "play none none none",
-					invalidateOnRefresh: true, // recalculates smoothly on window resizes
-				},
-			})
-			.to(card, {
-				opacity: 1,
-				duration: 0.4,
-				ease: "power1.out",
-			})
-			.fromTo(
-				number,
-				{ opacity: 0, x: initialX },
-				{ opacity: 1, x: 0, duration: 0.8, ease: "power2.out" },
-				"-=0.2",
-			);
-	});
+    gsap.ticker.lagSmoothing(0);
+    return lenis;
 }
 
-/*
-|--------------------------------------------------------------------------
-| Event Grid Animation
-|--------------------------------------------------------------------------
-*/
-function initEventGridAnimation() {
-	if (prefersReducedMotion) {
-		gsap.set(".event-grid-surface", { opacity: 1, clearProps: "opacity" });
-		return;
-	}
+/**
+ * 1. Hero Section Entrance Animation Core
+ */
+function initHeroAnimations(ctx) {
+    const section = ctx.querySelector(".c-hero-event");
+    if (!section) return;
 
-	if (!document.querySelector(".event-grid-surface")) return;
+    const meta = section.querySelector(".c-hero-event__meta");
+    const title = section.querySelector(".c-hero-event__title");
+    const desc = section.querySelector(".c-hero-event__desc");
+    const cta = section.querySelector(".c-hero-event__cta");
+    const spinner = section.querySelector(".c-hero-event__spinner");
 
-	gsap
-		.timeline({
-			scrollTrigger: {
-				trigger: ".event-grid-surface",
-				start: "top 85%",
-				toggleActions: "play none none none",
-			},
-			defaults: { duration: 0.6, ease: "power2.out" },
-		})
-		.to(".event-grid-surface", { opacity: 1, duration: 0.2 })
-		.from(".main-card", { y: 30, opacity: 0 })
-		.from(".card-1", { y: 20, opacity: 0 }, "-=0.3")
-		.from(".card-2", { y: 20, opacity: 0 }, "-=0.4");
+    const hardwareTargets = [meta, title, desc, cta, spinner].filter(Boolean);
+    
+    // Performance optimization: Never animate layout geometry changes like "width" 
+    // Use xPercent or scale instead to keep execution fully on the GPU compositor
+    gsap.set(hardwareTargets, { willChange: "transform, opacity" });
+
+    const tl = gsap.timeline({
+        defaults: { duration: 0.85, ease: "power4.out" },
+    });
+
+    tl.fromTo(section, { opacity: 0 }, { opacity: 1, duration: 1.0 })
+        .fromTo(meta, { opacity: 0, y: -15 }, { opacity: 1, y: 0 }, "-=0.2")
+        .fromTo(title, { opacity: 0, yPercent: 15, scale: 0.98 }, { opacity: 1, yPercent: 0, scale: 1 }, "-=0.6")
+        .fromTo(desc, { opacity: 0, yPercent: 10 }, { opacity: 1, yPercent: 0 }, "-=0.5")
+        .fromTo(cta, { opacity: 0, scale: 0.92, yPercent: 10 }, { opacity: 1, scale: 1, yPercent: 0, ease: "back.out(1.4)" }, "-=0.4");
+
+    if (spinner) {
+        tl.fromTo(spinner, { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, ease: "elastic.out(1, 0.75)", duration: 1.2 }, "-=0.7");
+        gsap.to(spinner, { rotation: 360, duration: 25, ease: "none", repeat: -1 });
+    }
+
+    tl.eventCallback("onComplete", () => {
+        gsap.set(hardwareTargets, { clearProps: "willChange" });
+    });
 }
 
-/*
-|--------------------------------------------------------------------------
-| Testimonials Slider
-|--------------------------------------------------------------------------
-*/
-function initTestimonialSlider() {
-	const prevBtn = document.getElementById("prev-btn");
-	const nextBtn = document.getElementById("next-btn");
-	const slider = document.getElementById("slider-deck");
-	if (!prevBtn || !nextBtn || !slider) return;
+/**
+ * 2. Agenda Section Isolated Item-Scrub
+ */
+function initAgendaScrubAnimations(ctx) {
+    const section = ctx.querySelector(".c-agenda");
+    if (!section) return;
 
-	const cards = document.querySelectorAll(".exact-layout-card");
-	const len = cards.length;
-	if (len === 0) return;
+    const headerText = section.querySelector("header h2");
+    const items = section.querySelectorAll(".c-agenda__item");
+    const spinner = section.querySelector(".c-agenda__spinner");
 
-	let activeIndex = 1;
-	let startX = 0;
+    if (items.length > 0) gsap.set(items, { opacity: 0, y: 40 });
 
-	// Use a token class on the parent instead of editing classLists on every single item in a loop
-	function updateLayout() {
-		cards.forEach((card, index) => {
-			card.classList.remove("pos-center", "pos-left", "pos-right");
-			if (index === activeIndex) {
-				card.classList.add("pos-center");
-			} else if (index === (activeIndex - 1 + len) % len) {
-				card.classList.add("pos-left");
-			} else if (index === (activeIndex + 1) % len) {
-				card.classList.add("pos-right");
-			}
-		});
-	}
+    if (headerText) {
+        const split = new SplitText(headerText, { type: "chars" });
+        gsap.fromTo(split.chars,
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                stagger: 0.03,
+                scrollTrigger: {
+                    trigger: headerText,
+                    start: "top 90%",
+                    end: "top 65%",
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                    // Lifecycle Control: Toggle properties natively on and off offscreen
+                    toggleActions: "play none none reverse" 
+                }
+            }
+        );
+    }
 
-	function goNext() {
-		activeIndex = (activeIndex + 1) % len;
-		updateLayout();
-	}
+    items.forEach((item) => {
+        gsap.fromTo(item,
+            { opacity: 0, y: 40 },
+            {
+                opacity: 1,
+                y: 0,
+                ease: "power1.out",
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom-=10%",
+                    end: "top center",
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                    // Performance optimization: Automatically toggles hardware acceleration layers
+                    fastScrollEnd: true, 
+                }
+            }
+        );
+    });
 
-	function goPrev() {
-		activeIndex = (activeIndex - 1 + len) % len;
-		updateLayout();
-	}
-
-	prevBtn.addEventListener("click", goPrev);
-	nextBtn.addEventListener("click", goNext);
-
-	slider.addEventListener(
-		"touchstart",
-		(event) => {
-			startX = event.touches[0].clientX;
-		},
-		{ passive: true },
-	);
-
-	slider.addEventListener(
-		"touchend",
-		(event) => {
-			const deltaX = startX - event.changedTouches[0].clientX;
-			if (deltaX > 50) goNext();
-			else if (deltaX < -50) goPrev();
-		},
-		{ passive: true }, // Made touchEnd passive since preventDefault isn't called
-	);
-
-	updateLayout();
+    if (spinner) {
+        gsap.fromTo(spinner,
+            { rotation: 0, scale: 0.85, opacity: 0.3 },
+            {
+                rotation: 180,
+                scale: 1,
+                opacity: 1,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                }
+            }
+        );
+    }
 }
 
-/*
-|--------------------------------------------------------------------------
-| App Initialization
-|--------------------------------------------------------------------------
-*/
-function initAnimations() {
-	return gsap.context(() => {
-		initHighlightCards();
-		initEventGridAnimation();
-	});
+/**
+ * 3. Speakers Section Interactive Scrub & Magnetic Hover Engine
+ */
+function initSpeakersScrubAnimations(ctx) {
+    const section = ctx.querySelector(".c-speakers");
+    if (!section) return;
+
+    const cards = section.querySelectorAll(".c-speaker-card");
+    const headerText = section.querySelector("header h2");
+    if (cards.length === 0) return;
+
+    // PERFORMANCE CRITICAL FIX: Split headers globally ONCE, not iteratively inside your loops
+    if (headerText) {
+        const splitHeader = new SplitText(headerText, { type: "chars" });
+        gsap.fromTo(splitHeader.chars, 
+            { y: 30, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                stagger: 0.03,
+                scrollTrigger: {
+                    trigger: headerText,
+                    start: "top 85%",
+                    end: "top 60%",
+                    scrub: true,
+                    invalidateOnRefresh: true
+                }
+            }
+        );
+    }
+
+    cards.forEach((card) => {
+        const content = card.querySelector(".c-speaker-card__content");
+        const imgWrapper = card.querySelector(".c-speaker-card__image-wrapper");
+        const img = card.querySelector(".c-speaker-card__img");
+
+        const scrubTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom center",
+                scrub: true,
+                invalidateOnRefresh: true,
+            },
+        });
+
+        scrubTimeline
+            .fromTo(imgWrapper, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "none" }, 0)
+            .fromTo(img, { scale: 1.25 }, { scale: 1, ease: "none" }, 0)
+            .fromTo(content, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: "power1.out" }, "-=0.5");
+
+        // High-Performance Pointer Listeners via Overwrite Strategy
+        card.addEventListener("mousemove", (e) => {
+            const { left, top, width, height } = card.getBoundingClientRect();
+            const xRel = (e.clientX - left) / width - 0.5;
+            const yRel = (e.clientY - top) / height - 0.5;
+
+            gsap.to(card, { scale: 1.02, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+            if (img) {
+                gsap.to(img, { x: xRel * 15, y: yRel * 15, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+            }
+        });
+
+        card.addEventListener("mouseleave", () => {
+            gsap.to(card, { scale: 1, duration: 0.4, ease: "power3.out", overwrite: "auto" });
+            if (img) {
+                gsap.to(img, { x: 0, y: 0, duration: 0.4, ease: "power3.out", overwrite: "auto" });
+            }
+        });
+    });
 }
 
-function init() {
-	initAnimations();
-	initTestimonialSlider();
+/**
+ * 4. Value Proposition Section Responsive Isolated Scrub
+ */
+function initWhyAttendCenterScrub(ctx) {
+    const section = ctx.querySelector(".c-why-attend");
+    if (!section) return;
+
+    const header = section.querySelector(".c-why-attend-header");
+    const leftCards = section.querySelectorAll(".c-highlight-card--left");
+    const rightCards = section.querySelectorAll(".c-highlight-card--right");
+    const allNumbers = section.querySelectorAll(".c-highlight-card__number");
+
+    if (header) {
+        gsap.fromTo(header, { y: 30, opacity: 0 }, {
+            y: 0, opacity: 1,
+            scrollTrigger: { trigger: header, start: "top 90%", end: "top 65%", scrub: true, invalidateOnRefresh: true }
+        });
+    }
+
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 769px)", () => {
+        leftCards.forEach((card) => {
+            gsap.fromTo(card, { opacity: 0, x: -60 }, {
+                opacity: 1, x: 0, ease: "none",
+                scrollTrigger: { trigger: card, start: "top bottom", end: "bottom center", scrub: true, invalidateOnRefresh: true }
+            });
+        });
+
+        rightCards.forEach((card) => {
+            gsap.fromTo(card, { opacity: 0, x: 60 }, {
+                opacity: 1, x: 0, ease: "none",
+                scrollTrigger: { trigger: card, start: "top bottom", end: "bottom center", scrub: true, invalidateOnRefresh: true }
+            });
+        });
+    });
+
+    mm.add("(max-width: 768px)", () => {
+        [...leftCards, ...rightCards].forEach((card) => {
+            gsap.fromTo(card, { opacity: 0, y: 30 }, {
+                opacity: 1, y: 0, ease: "none",
+                scrollTrigger: { trigger: card, start: "top bottom-=10%", end: "top center", scrub: true, invalidateOnRefresh: true }
+            });
+        });
+    });
+
+    allNumbers.forEach((num) => {
+        gsap.fromTo(num, { y: 20, scale: 0.9 }, {
+            y: -10, scale: 1, ease: "none",
+            scrollTrigger: { trigger: num, start: "top bottom", end: "bottom top", scrub: true, invalidateOnRefresh: true }
+        });
+    });
 }
 
-// Check if document is already interactive/complete to avoid missing immediate execution state
+/**
+ * 5. Ticket Configuration Section Responsive Isolated Scrub
+ */
+function initPricingCenterScrub(ctx) {
+    const section = ctx.querySelector(".pricing-section");
+    if (!section) return;
+
+    const title = section.querySelector(".pricing-title");
+    const cards = section.querySelectorAll(".pricing-card");
+
+    if (title) {
+        gsap.fromTo(title, { opacity: 0, y: 30 }, {
+            opacity: 1, y: 0, ease: "none",
+            scrollTrigger: { trigger: title, start: "top 90%", end: "top 70%", scrub: true, invalidateOnRefresh: true }
+        });
+    }
+
+    cards.forEach((card) => {
+        gsap.fromTo(card, { opacity: 0, y: 60, scale: 0.95 }, {
+            opacity: 1, y: 0, scale: 1, ease: "none",
+            scrollTrigger: {
+                trigger: card,
+                start: "top bottom-=10%",
+                end: "top center",
+                scrub: true,
+                invalidateOnRefresh: true
+            }
+        });
+    });
+}
+
+/**
+ * 6. Contact Form Grid Block Center-Scrub
+ */
+function initContactCenterScrub(ctx) {
+    const section = ctx.querySelector(".contact-section");
+    if (!section) return;
+
+    const infoBlock = section.querySelector(".contact-info");
+    const contactCard = section.querySelector(".contact-card");
+    const mapWrapper = section.querySelector(".map-wrapper");
+
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 769px)", () => {
+        const tl = gsap.timeline({
+            scrollTrigger: { trigger: section, start: "top bottom", end: "center center", scrub: true, invalidateOnRefresh: true },
+        });
+        if (infoBlock) tl.fromTo(infoBlock, { opacity: 0, x: -50 }, { opacity: 1, x: 0, ease: "none" }, 0);
+        if (contactCard) tl.fromTo(contactCard, { opacity: 0, x: 50 }, { opacity: 1, x: 0, ease: "none" }, 0);
+        if (mapWrapper) tl.fromTo(mapWrapper, { opacity: 0, y: 40, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, ease: "none" }, 0.15);
+    });
+
+    mm.add("(max-width: 768px)", () => {
+        [infoBlock, contactCard, mapWrapper].forEach((element) => {
+            if (!element) return;
+            gsap.fromTo(element, { opacity: 0, y: 30 }, {
+                opacity: 1, y: 0, ease: "none",
+                scrollTrigger: { trigger: element, start: "top bottom-=5%", end: "top center", scrub: true, invalidateOnRefresh: true }
+            });
+        });
+    });
+}
+
+/**
+ * Consolidated Execution Pipeline
+ */
+function initGlobalAnimations() {
+    const context = document.body;
+
+    initSmoothScroll();
+    initHeroAnimations(context);
+    initAgendaScrubAnimations(context);
+    initSpeakersScrubAnimations(context);
+    initWhyAttendCenterScrub(context);
+    initPricingCenterScrub(context);
+    initContactCenterScrub(context);
+}
+
 if (document.readyState === "loading") {
-	document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", initGlobalAnimations);
 } else {
-	init();
+    initGlobalAnimations();
 }

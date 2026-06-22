@@ -1,0 +1,30 @@
+---
+permalink: /feed.xml
+layout: null
+---
+
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+
+<channel>
+  <title>{{ site.name }}</title>
+  <link>{{ site.url }}</link>
+  <description>{{ site.description }}</description>
+
+  {% for post in collections.posts | reverse %}
+
+  <item>
+    <title>{{ post.data.title }}</title>
+    <link>{{ site.url }}{{ post.url }}</link>
+    <guid>{{ site.url }}{{ post.url }}</guid>
+    <pubDate>{{ post.date.toUTCString() }}</pubDate>
+
+    <description>
+      {{ post.data.description or site.description }}
+    </description>
+  </item>
+
+  {% endfor %}
+
+</channel>
+</rss>

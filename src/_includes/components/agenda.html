@@ -1,98 +1,71 @@
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Next-Gen AI Summit Daily Agenda",
-    "description": "Comprehensive 3-day breakdown of technical keynote workshops, developer tracks, and networking panels.",
-    "itemListElement": [
-      {
-        "@type": "Event",
-        "position": 1,
-        "name": "Day 1: Foundations of Generative AI & LLMs",
-        "startDate": "2026-10-15T09:00:00+00:00",
-        "endDate": "2026-10-15T19:00:00+00:00",
-        "description": "Deep-dives into transformer models, open-source model optimization, and RAG architectures."
-      },
-      {
-        "@type": "Event",
-        "position": 2,
-        "name": "Day 2: Enterprise AI Infrastructure & MLOps",
-        "startDate": "2026-10-16T09:00:00+00:00",
-        "endDate": "2026-10-16T20:00:00+00:00",
-        "description": "Operationalizing machine learning workflows, vector databases, and secure edge deployments."
-      },
-      {
-        "@type": "Event",
-        "position": 3,
-        "name": "Day 3: The Autonomous Future & Strategic Networking",
-        "startDate": "2026-10-17T09:00:00+00:00",
-        "endDate": "2026-10-17T16:00:00+00:00",
-        "description": "Panel discussions exploring multi-agent workflows alongside executive strategic partnerships."
-      }
-    ]
-  }
-</script>
-
-<section aria-label="Conference Agenda and Schedule" class="bg-accent rounded-card p-10 relative overflow-hidden text-white opacity-0 agenda-surface">
+<section aria-label="Conference Agenda and Schedule" class="c-agenda">
   
-  <ul class="flex flex-col gap-16 agenda-list">
-    <li class="agenda-item flex flex-col md:flex-row justify-between gap-6 border-b border-zinc-800/60 pb-12">
-      <div class="flex-1 flex flex-col text-2xl gap-2 font-bold tracking-tight">
-        <span class="text-primary-light text-xl tracking-wider uppercase font-mono">Day 1</span>
-        <time datetime="2026-10-15T09:00" class="text-3xl text-white">09:00 - 19:00</time>
-      </div>
+  <header class="c-agenda-header">
+    <h2 class="c-agenda-header__title">Agenda</h2>
 
-      <div class="flex-1 flex flex-col gap-4">
-        <h3 class="font-bold text-2xl tracking-tight text-white">
-          Foundations of Generative AI &amp; Large Language Models
-        </h3>
-        <p class="text-zinc-400 leading-relaxed text-base">
-          Kick off the summit with deep-dives into baseline transformer architectures. Learn cutting-edge optimization techniques for open-source LLMs, custom weight tuning strategies, and enterprise deployment frameworks for Retrieval-Augmented Generation (RAG).
-        </p>
-      </div>
-    </li>
+    <div class="c-agenda-header__meta">
+      <time datetime="2052-10-15T09:00" class="c-agenda-header__time">October 15-17, 2052</time>
+      <span class="c-agenda-header__divider" aria-hidden="true">|</span>
+      <address class="c-agenda-header__address">
+        Horizon Convention Center, Amsterdam
+      </address>
+    </div>
+  </header>
 
-    <li class="agenda-item flex flex-col md:flex-row justify-between gap-6 border-b border-zinc-800/60 pb-12">
-      <div class="flex-1 flex flex-col text-2xl gap-2 font-bold tracking-tight">
-        <span class="text-primary-light text-xl tracking-wider uppercase font-mono">Day 2</span>
-        <time datetime="2026-10-16T09:00" class="text-3xl text-white">09:00 - 20:00</time>
-      </div>
+  <div class="c-agenda__card">
+    <ul class="c-agenda__list" role="list">
+      
+      <li class="c-agenda__item">
+        <div class="c-agenda__time-block">
+          <span class="c-agenda__day">Day 1</span>
+          <time datetime="2026-10-15T09:00" class="c-agenda__time">09:00 - 19:00</time>
+        </div>
+        <div class="c-agenda__content">
+          <h3 class="c-agenda__heading">Foundations of Generative AI &amp; Large Language Models</h3>
+          <p class="c-agenda__desc">
+            Kick off the summit with deep-dives into baseline transformer architectures. Learn cutting-edge optimization techniques for open-source LLMs, custom weight tuning strategies, and enterprise deployment frameworks for Retrieval-Augmented Generation (RAG).
+          </p>
+        </div>
+      </li>
 
-      <div class="flex-1 flex flex-col gap-4">
-        <h3 class="font-bold text-2xl tracking-tight text-white">
-          Enterprise AI Infrastructure &amp; Scalable MLOps
-        </h3>
-        <p class="text-zinc-400 leading-relaxed text-base">
-          Shift the focus to operationalizing artificial intelligence at scale. Industry engineers dissect high-throughput machine learning operations (MLOps), real-time vector database query performance, and secure enterprise data handling layers.
-        </p>
-      </div>
-    </li>
+      <li class="c-agenda__item">
+        <div class="c-agenda__time-block">
+          <span class="c-agenda__day">Day 2</span>
+          <time datetime="2026-10-16T09:00" class="c-agenda__time">09:00 - 20:00</time>
+        </div>
+        <div class="c-agenda__content">
+          <h3 class="c-agenda__heading">Enterprise AI Infrastructure &amp; Scalable MLOps</h3>
+          <p class="c-agenda__desc">
+            Shift the focus to operationalizing artificial intelligence at scale. Industry engineers dissect high-throughput machine learning operations (MLOps), real-time vector database query performance, and secure enterprise data handling layers.
+          </p>
+        </div>
+      </li>
 
-    <li class="agenda-item flex flex-col md:flex-row justify-between gap-6 pb-4">
-      <div class="flex-1 flex flex-col text-2xl gap-2 font-bold tracking-tight">
-        <span class="text-primary-light text-xl tracking-wider uppercase font-mono">Day 3</span>
-        <time datetime="2026-10-17T09:00" class="text-3xl text-white">09:00 - 16:00</time>
-      </div>
+      <li class="c-agenda__item c-agenda__item--last">
+        <div class="c-agenda__time-block">
+          <span class="c-agenda__day">Day 3</span>
+          <time datetime="2026-10-17T09:00" class="c-agenda__time">09:00 - 16:00</time>
+        </div>
+        <div class="c-agenda__content">
+          <h3 class="c-agenda__heading">The Autonomous Agent Future &amp; Executive Networking</h3>
+          <p class="c-agenda__desc">
+            Conclude with tactical panels evaluating multi-agent orchestration frameworks and next-decade technology trends. Wrap up the conference by establishing strategic relationships during the formal B2B executive partnership mixer.
+          </p>
+        </div>
+      </li>
 
-      <div class="flex-1 flex flex-col gap-4">
-        <h3 class="font-bold text-2xl tracking-tight text-white">
-          The Autonomous Agent Future &amp; Executive Networking
-        </h3>
-        <p class="text-zinc-400 leading-relaxed text-base">
-          Conclude with tactical panels evaluating multi-agent orchestration frameworks and next-decade technology trends. Wrap up the conference by establishing strategic relationships during the formal B2B executive partnership mixer.
-        </p>
-      </div>
-    </li>
-  </ul>
+    </ul>
 
-  <img 
-    class="agenda-spinner absolute -bottom-10 -left-20 z-10 pointer-events-none select-none opacity-40 will-change-transform" 
-    src="/assets/images/B2.svg" 
-    eleventy:ignore
-    alt="" 
-    aria-hidden="true" 
-    loading="lazy"
-    decoding="async"
-  />
+    <img
+      eleventy:ignore
+      class="c-agenda__spinner"
+      src="/assets/images/B2.svg"
+      alt=""
+      aria-hidden="true"
+      width="250"
+      height="250"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
 </section>
-

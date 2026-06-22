@@ -1,0 +1,155 @@
+// ==========================================================================
+// Component: Performance-Optimized Agenda Header (`.c-agenda-header`)
+// ==========================================================================
+@use "main" as *;
+// ==========================================================================
+// Component: Separated Agenda Layout Block (`.c-agenda`)
+// ==========================================================================
+
+@use "sass:color";
+
+.c-agenda {
+  width: 100%;
+  margin-bottom: $space-2xl; // mb-20 equivalent
+
+  /* 1. Independent Header Block */
+  &-header {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    margin-bottom: $space-2xl; // Spacing that separates header from card cleanly
+    
+    @media (min-width: 48rem) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &__title {
+      font-family: $font-heading;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 0;
+      color: #ffffff;
+    }
+
+    &__meta {
+      font-family: $font-body;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: color.scale($color-secondary, $lightness: 20%);
+      
+      @media (max-width: 47.9375rem) {
+        display: flex;
+        flex-direction: column;
+        gap: $space-xs;
+      }
+    }
+
+    &__time { display: inline-block; }
+    &__address { display: inline-block; font-style: normal; }
+    &__divider {
+      margin: 0 $space-sm;
+      color: rgba(255, 255, 255, 0.3);
+      @media (max-width: 47.9375rem) { display: none; }
+    }
+  }
+
+  /* 2. Isolated Dark Data Card Block */
+  &__card {
+    position: relative;
+    background-color: $color-accent; // #1A1A1A
+    border-radius: $radius-card;     // 35px
+    padding: $space-2xl;             // p-10
+    overflow: hidden;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3xl;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: $space-lg;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: $space-2xl;
+
+    @media (min-width: 48rem) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    &--last {
+      border-bottom: none;
+      padding-bottom: $space-sm;
+    }
+  }
+
+  &__time-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    font-weight: 700;
+  }
+
+  &__day {
+    font-family: $font-sans;
+    color: color.scale($color-primary, $lightness: 40%);
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__time {
+    font-size: 1.875rem;
+    color: #ffffff;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__heading {
+    font-family: $font-heading;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: #ffffff;
+  }
+
+  &__desc {
+    font-family: $font-body;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: color.scale($color-secondary, $lightness: 10%);
+    margin: 0;
+  }
+
+  &__spinner {
+    position: absolute;
+    bottom: -2.5rem;
+    left: -5rem;
+    z-index: 1;
+    width: 250px;
+    height: 250px;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.4;
+    will-change: transform;
+  }
+}

@@ -1,13 +1,13 @@
 {% set seo = seoContext %}
 
 <meta name="description" content="{{ seo.description }}">
-<meta property="og:type" content="{{ seo.ogType }}">
+<meta property="og:type" content="{{ seo.website }}">
 <meta property="og:title" content="{{ seo.title }}">
-<meta property="og:url" content="{{ seo.fullUrl }}">
+<meta property="og:url" content="{{ seo.url }}">
 <meta property="og:image" content="{{ ogImage or site.ogImage }}">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ seo.title }}">
+<meta name="twitter:title" content="{{ site.name }}">
 <meta name="twitter:description" content="{{ seo.description }}">
 <meta name="twitter:image" content="{{ ogImage or site.ogImage }}">
 {% if site.twitterUsername %}

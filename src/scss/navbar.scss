@@ -1,0 +1,144 @@
+// Assuming tokens are accessible via global scope or an explicit file import here
+
+@use "main" as *;
+.c-header {
+  position: relative;
+  z-index: 50;
+  background-color: #000000;
+  color: #ffffff;
+  padding: $space-md $space-lg; // py-4 px-6
+  font-family: "Syne", $font-sans; // Keeps your custom brand font heading style
+
+  .c-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: $max-width; // 75rem
+    margin-left: auto;
+    margin-right: auto;
+
+    &__logo {
+      font-weight: 700;
+      font-size: 1.875rem; // text-3xl
+      letter-spacing: -0.05em; // tracking-tight
+      line-height: 1;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 4px;
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px #ffffff; // Focus ring framework
+      }
+    }
+
+    &__toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.25rem; // h-9
+      width: 2.25rem;  // w-9
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      border-radius: 4px;
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px #ffffff;
+      }
+
+      @media (min-width: 48rem) { // md breakpoint equivalent
+        display: none;
+      }
+    }
+
+    &__icon {
+      width: 1.75rem;  // w-7
+      height: 1.75rem; // h-7
+      transition: transform 300ms ease;
+
+      &--close {
+        display: none; // Hidden by default
+      }
+    }
+
+    &__menu {
+      list-style: none;
+      margin: 0;
+      padding: $space-xl 0; // py-8
+      background-color: #000000;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); // shadow-xl
+
+      // Absolute Positioning Menu Mobile Drawer Defaults
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $space-lg; // gap-6
+      font-size: 1.125rem; // text-lg
+      z-index: -10;
+      
+      // Animations Framework State Settings
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-100%);
+      transition: transform 300ms ease-in-out, opacity 300ms ease-in-out, visibility 300ms ease-in-out;
+
+      // Active state triggered via JS toggle
+      &.is-active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      @media (min-width: 48rem) { // Desktop Restructuring (md: variant mappings)
+        position: static;
+        width: auto;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: $space-xs; // gap-1
+        box-shadow: none;
+        z-index: 1;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(3px); // md:translate-y-[3px]
+      }
+    }
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: $space-sm $space-md; // px-4 py-2
+      color: #ffffff;
+      text-decoration: none;
+      border: 1px solid transparent;
+      border-radius: 9999px; // rounded-full
+      line-height: 1;
+      transition: border-color 150ms ease, background-color 150ms ease;
+
+      &:hover,
+      &:focus-visible {
+        border-color: #ffffff;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+
+  // Handle active SVG icon shifts smoothly when header state variations evolve
+  &.is-open {
+    .c-nav__icon--hamburger { display: none; }
+    .c-nav__icon--close { display: block; }
+  }
+}
